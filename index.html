@@ -9,11 +9,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Lumora">
-<meta name="theme-color" content="#0b0b0b">
+<meta name="theme-color" content="#0d0a14">
 <style>
-:root{--bg:#090909;--panel:#171717;--ink:#f5f5f5;--muted:#a5a5a5;--line:#303030;--acc:#e8ff45;--err:#ff7474}*{box-sizing:border-box}html,body{height:100%;margin:0}body{height:100dvh;font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}input,textarea,button{font:inherit;color:inherit}input,textarea{border:1px solid var(--line);background:#111b21;border-radius:10px;padding:10px 12px;width:100%;color:var(--ink)}button{border:1px solid var(--line);background:#26343d;border-radius:10px;padding:8px 13px;cursor:pointer}button:hover{filter:brightness(1.12)}button.p{background:#e8ff45;border-color:#e8ff45;color:#171717;font-weight:700}button.d{color:#ff8585}button:disabled{opacity:.5}:focus-visible{outline:2px solid #e8ff45;outline-offset:2px}.hide{display:none!important}.view{height:100%;display:flex;flex-direction:column;min-height:0}.top{padding:11px 15px;border-bottom:1px solid #26343d;background:#171717;display:flex;gap:10px;align-items:center;min-height:62px;z-index:2}.top h1{font-size:17px;margin:0;flex:1;font-weight:650}#menu .top h1{font-size:20px}#set{padding:13px 15px;background:#151515;border-bottom:1px solid var(--line);display:grid;gap:9px}#set label{font-size:13px;color:var(--muted);display:flex;gap:7px;align-items:center}#set label input{width:auto;accent-color:var(--acc)}.discover{padding:14px 18px 0;background:#090909}.discover-title{display:flex;align-items:baseline;gap:10px;font-size:21px;font-weight:750}.discover-title small{font-size:11px;color:#929292;font-weight:500}.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 2px}.chip{flex:none;border:1px solid #333;border-radius:20px;padding:6px 13px;color:#bbb;font-size:12px}.chip.active{background:#e8ff45;color:#111;border-color:#e8ff45;font-weight:700}#grid{flex:1;overflow-y:auto;padding:18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:16px;align-content:start;background:radial-gradient(ellipse at top,#202018 0,#090909 68%)}.card{position:relative;overflow:hidden;min-height:270px;border:1px solid #383838;border-radius:16px;padding:0;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;cursor:pointer;background:radial-gradient(circle at 70% 24%,#4b5368 0,#202631 38%,#101419 78%);box-shadow:0 8px 24px #0005;isolation:isolate}.card:before{content:"";position:absolute;inset:0;background-image:var(--portrait);background-size:cover;background-position:center 22%;z-index:-2;transition:transform .35s}.card.image-fallback:before{background-image:linear-gradient(145deg,#343b50,#111820 75%)}.card:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#071014 0%,#071014e8 24%,#07101430 72%,#07101412 100%);z-index:-1}.card:hover:before{transform:scale(1.05)}.card .ad{position:absolute;top:12px;right:12px;font-size:10px;font-weight:800;padding:3px 7px;border-radius:10px;background:#ff3d5ecc;color:#fff;border:1px solid #ffffff55}.card .av{position:absolute;top:12px;left:12px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#111111c9;border:1px solid #ffffff55;font-size:21px}.card b{font-size:18px;padding:0 14px}.card span.ds{font-size:13px;color:#d0d9dd;padding:0 14px 4px;min-height:38px}.card button{font-size:12px;padding:6px 10px;align-self:flex-start;margin:0 14px 14px;background:#151515b8;border-color:#ffffff35}.card.new{align-items:center;justify-content:center;color:#e8ff45;border:1px dashed #6b6b45;background:#151515;min-height:160px;font-weight:600}.card.new:before,.card.new:after{display:none}#chat{background:#0b141a;position:relative}#chat .top{gap:12px}#back{width:40px;height:40px;border-radius:50%;padding:0;font-size:28px;background:transparent;border-color:transparent;color:#d9e4e8}#chathead{display:flex;align-items:center;gap:10px;flex:1;min-width:0}#chatavatar{width:39px;height:39px;object-fit:cover;border-radius:50%;border:1px solid #ffffff33;background:#34434b}#chatidentity{min-width:0}#ctitle{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#chatstatus{font-size:11px;color:#aebac1}#cedit,#cclear{font-size:12px;padding:7px 9px}#log{position:relative;isolation:isolate;flex:1;overflow-y:auto;padding:20px 14px 24px;display:flex;flex-direction:column;gap:12px;background:#101b22}#log:before{content:"";position:fixed;inset:62px 0 66px;background-image:var(--chat-wallpaper);background-size:cover;background-position:center 35%;opacity:.62;z-index:-2;pointer-events:none}#log:after{content:"";position:fixed;inset:62px 0 66px;background:linear-gradient(#09090955,#09090988);z-index:-1;pointer-events:none}.m{max-width:min(720px,88%);padding:9px 12px;border-radius:13px;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 1px 2px #0004;font-size:14px;line-height:1.48}.m strong{font-weight:800;color:#fff}.m em{font-style:italic}.u strong{color:#000;font-weight:900;-webkit-text-stroke:.35px #000}.u{align-self:flex-end;background:#e8ff45;color:#171717;border-top-right-radius:4px}.a{align-self:flex-start;background:#171717;color:#e9edef;border:1px solid #ffffff0d;border-top-left-radius:4px}.e{align-self:center;color:#ff9b9b;font-size:13px;white-space:pre-wrap;background:#2b1b20;padding:8px 12px;border-radius:10px}.bar{display:flex;gap:9px;padding:10px 12px;border-top:1px solid #26343d;background:#171717;align-items:flex-end;z-index:2}#in{flex:1;resize:none;max-height:130px;border:0;border-radius:22px;background:#292929;padding:11px 15px;min-height:44px}#send{width:44px;height:44px;border-radius:50%;padding:0;font-size:0;display:grid;place-items:center}#send:after{content:"➤";font-size:19px;color:#171717}#ov{position:fixed;inset:0;background:rgba(0,0,0,.68);display:flex;align-items:flex-end;justify-content:center;z-index:5;backdrop-filter:blur(4px)}#box{background:#171717;width:min(640px,100%);max-height:92dvh;overflow-y:auto;border:1px solid #3b4b54;border-radius:18px 18px 0 0;padding:16px;display:grid;gap:9px;box-shadow:0 -12px 40px #0006}#box label{font-size:13px;color:var(--muted)}#box .r{display:flex;gap:8px;flex-wrap:wrap}#box button{font-size:13px}#box b{font-size:17px}@media(max-width:520px){.discover{padding:13px 12px 0}.discover-title{font-size:19px}#grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;padding:12px}.card{min-height:230px;border-radius:15px}.card b{font-size:16px}.card span.ds{font-size:12px}#chat .top{padding:8px 9px;gap:6px}#cedit,#cclear{padding:7px;font-size:11px}#log{padding:16px 11px}.m{max-width:91%}}
+:root{--bg:#090909;--panel:#171717;--ink:#f5f5f5;--muted:#a5a5a5;--line:#303030;--acc:#8b5cf6;--err:#ff7474}*{box-sizing:border-box}html,body{height:100%;margin:0}body{height:100dvh;font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}input,textarea,button{font:inherit;color:inherit}input,textarea{border:1px solid var(--line);background:#111b21;border-radius:10px;padding:10px 12px;width:100%;color:var(--ink)}button{border:1px solid var(--line);background:#26343d;border-radius:10px;padding:8px 13px;cursor:pointer}button:hover{filter:brightness(1.12)}button.p{background:#8b5cf6;border-color:#8b5cf6;color:#171717;font-weight:700}button.d{color:#ff8585}button:disabled{opacity:.5}:focus-visible{outline:2px solid #8b5cf6;outline-offset:2px}.hide{display:none!important}.view{height:100%;display:flex;flex-direction:column;min-height:0}.top{padding:11px 15px;border-bottom:1px solid #26343d;background:#171717;display:flex;gap:10px;align-items:center;min-height:62px;z-index:2}.top h1{font-size:17px;margin:0;flex:1;font-weight:650}#menu .top h1{font-size:20px}#set{padding:13px 15px;background:#151515;border-bottom:1px solid var(--line);display:grid;gap:9px}#set label{font-size:13px;color:var(--muted);display:flex;gap:7px;align-items:center}#set label input{width:auto;accent-color:var(--acc)}.discover{padding:14px 18px 0;background:#090909}.discover-title{display:flex;align-items:baseline;gap:10px;font-size:21px;font-weight:750}.discover-title small{font-size:11px;color:#929292;font-weight:500}.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 2px}.chip{flex:none;border:1px solid #333;border-radius:20px;padding:6px 13px;color:#bbb;font-size:12px}.chip.active{background:#8b5cf6;color:#111;border-color:#8b5cf6;font-weight:700}#grid{flex:1;overflow-y:auto;padding:18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:16px;align-content:start;background:radial-gradient(ellipse at top,#1d1530 0,#090909 68%)}.card{position:relative;overflow:hidden;min-height:270px;border:1px solid #383838;border-radius:16px;padding:0;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;cursor:pointer;background:radial-gradient(circle at 70% 24%,#4b5368 0,#202631 38%,#101419 78%);box-shadow:0 8px 24px #0005;isolation:isolate}.card:before{content:"";position:absolute;inset:0;background-image:var(--portrait);background-size:cover;background-position:center 22%;z-index:-2;transition:transform .35s}.card.image-fallback:before{background-image:linear-gradient(145deg,#343b50,#111820 75%)}.card:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#071014 0%,#071014e8 24%,#07101430 72%,#07101412 100%);z-index:-1}.card:hover:before{transform:scale(1.05)}.card .ad{position:absolute;top:12px;right:12px;font-size:10px;font-weight:800;padding:3px 7px;border-radius:10px;background:#ff3d5ecc;color:#fff;border:1px solid #ffffff55}.card .av{position:absolute;top:12px;left:12px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#111111c9;border:1px solid #ffffff55;font-size:21px}.card b{font-size:18px;padding:0 14px}.card span.ds{font-size:13px;color:#d0d9dd;padding:0 14px 4px;min-height:38px}.card button{font-size:12px;padding:6px 10px;align-self:flex-start;margin:0 14px 14px;background:#151515b8;border-color:#ffffff35}.card.new{align-items:center;justify-content:center;color:#8b5cf6;border:1px dashed #5b4a91;background:#151515;min-height:160px;font-weight:600}.card.new:before,.card.new:after{display:none}#chat{background:#0b141a;position:relative}#chat .top{gap:12px}#back{width:40px;height:40px;border-radius:50%;padding:0;font-size:28px;background:transparent;border-color:transparent;color:#d9e4e8}#chathead{display:flex;align-items:center;gap:10px;flex:1;min-width:0}#chatavatar{width:39px;height:39px;object-fit:cover;border-radius:50%;border:1px solid #ffffff33;background:#34434b}#chatidentity{min-width:0}#ctitle{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#chatstatus{font-size:11px;color:#aebac1}#cedit,#cclear{font-size:12px;padding:7px 9px}#log{position:relative;isolation:isolate;flex:1;overflow-y:auto;padding:20px 14px 24px;display:flex;flex-direction:column;gap:12px;background:#101b22}#log:before{content:"";position:fixed;inset:62px 0 66px;background-image:var(--chat-wallpaper);background-size:cover;background-position:center 35%;opacity:.62;z-index:-2;pointer-events:none}#log:after{content:"";position:fixed;inset:62px 0 66px;background:linear-gradient(#09090955,#09090988);z-index:-1;pointer-events:none}.m{max-width:min(720px,88%);padding:9px 12px;border-radius:13px;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 1px 2px #0004;font-size:14px;line-height:1.48}.m strong{font-weight:800;color:#fff}.m em{font-style:italic}.u strong{color:#000;font-weight:900;-webkit-text-stroke:.35px #000}.u{align-self:flex-end;background:#8b5cf6;color:#171717;border-top-right-radius:4px}.a{align-self:flex-start;background:#171717;color:#e9edef;border:1px solid #ffffff0d;border-top-left-radius:4px}.e{align-self:center;color:#ff9b9b;font-size:13px;white-space:pre-wrap;background:#2b1b20;padding:8px 12px;border-radius:10px}.bar{display:flex;gap:9px;padding:10px 12px;border-top:1px solid #26343d;background:#171717;align-items:flex-end;z-index:2}#in{flex:1;resize:none;max-height:130px;border:0;border-radius:22px;background:#292929;padding:11px 15px;min-height:44px}#send{width:44px;height:44px;border-radius:50%;padding:0;font-size:0;display:grid;place-items:center}#send:after{content:"➤";font-size:19px;color:#171717}#ov{position:fixed;inset:0;background:rgba(0,0,0,.68);display:flex;align-items:flex-end;justify-content:center;z-index:5;backdrop-filter:blur(4px)}#box{background:#171717;width:min(640px,100%);max-height:92dvh;overflow-y:auto;border:1px solid #3b4b54;border-radius:18px 18px 0 0;padding:16px;display:grid;gap:9px;box-shadow:0 -12px 40px #0006}#box label{font-size:13px;color:var(--muted)}#box .r{display:flex;gap:8px;flex-wrap:wrap}#box button{font-size:13px}#box b{font-size:17px}@media(max-width:520px){.discover{padding:13px 12px 0}.discover-title{font-size:19px}#grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;padding:12px}.card{min-height:230px;border-radius:15px}.card b{font-size:16px}.card span.ds{font-size:12px}#chat .top{padding:8px 9px;gap:6px}#cedit,#cclear{padding:7px;font-size:11px}#log{padding:16px 11px}.m{max-width:91%}}
 #gate{position:fixed;inset:0;z-index:100;background:#090909;display:flex;align-items:center;justify-content:center;padding:20px}#gate .gb{max-width:440px;width:100%;background:#171717;border:1px solid #3b3b3b;border-radius:18px;padding:26px 22px;text-align:center;display:grid;gap:14px}#gate h2{margin:0;font-size:22px}#gate .n18{font-size:42px;font-weight:800;color:#ff3d5e}#gate p{margin:0;color:#c9c9c9;font-size:14px}#gate .gr{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.avp{display:flex;flex-direction:column;align-items:center;gap:6px}.avc{position:relative;width:96px;height:96px;border-radius:50%;background:#222;border:2px dashed #555;display:grid;place-items:center;cursor:pointer;font-size:30px;margin:0!important}.avc img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}.avc i{position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:50%;background:#e8ff45;color:#171717;font-style:normal;font-weight:800;font-size:18px;display:grid;place-items:center;border:2px solid #171717}.seg{display:flex;gap:8px}.seg button{flex:1;padding:10px 6px}.seg button.on{background:#e8ff45;border-color:#e8ff45;color:#171717;font-weight:700}details summary{cursor:pointer;color:#a5a5a5;font-size:13px;padding:4px 0}details>*{margin-top:8px}
+.avp{display:flex;flex-direction:column;align-items:center;gap:6px}.avc{position:relative;width:96px;height:96px;border-radius:50%;background:#222;border:2px dashed #555;display:grid;place-items:center;cursor:pointer;font-size:30px;margin:0!important}.avc img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}.avc i{position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:50%;background:#8b5cf6;color:#171717;font-style:normal;font-weight:800;font-size:18px;display:grid;place-items:center;border:2px solid #171717}.seg{display:flex;gap:8px}.seg button{flex:1;padding:10px 6px}.seg button.on{background:#8b5cf6;border-color:#8b5cf6;color:#171717;font-weight:700}details summary{cursor:pointer;color:#a5a5a5;font-size:13px;padding:4px 0}details>*{margin-top:8px}
 .upbtn{display:inline-block;padding:9px 12px;border:1px solid #3b3b3b;border-radius:12px;background:#222;color:#f5f5f5;font-size:13px;font-weight:700;cursor:pointer;margin:0}
 #ov2{position:fixed;inset:0;background:rgba(0,0,0,.68);display:flex;align-items:flex-end;justify-content:center;z-index:6;backdrop-filter:blur(4px)}#box2{background:#171717;width:min(640px,100%);max-height:92dvh;overflow-y:auto;border:1px solid #3b4b54;border-radius:18px 18px 0 0;padding:16px;display:grid;gap:9px}#box2 label,#box2 .r label{font-size:13px;color:var(--muted)}#box2 label.upbtn{color:#f5f5f5}select{border:1px solid var(--line);background:#111b21;border-radius:10px;padding:10px 12px;width:100%;color:var(--ink)}.m.o{align-self:flex-start;background:#1e2a30;color:#e9edef;border:1px solid #ffffff14;border-top-left-radius:4px}.nm{font-size:11px;font-weight:800;margin-bottom:2px;display:flex;align-items:center;gap:5px}.nm img{width:18px;height:18px;border-radius:50%;object-fit:cover}.u .nm{color:#000}#proom{display:flex;gap:6px;flex-wrap:wrap;padding:7px 12px;background:#101010;border-bottom:1px solid var(--line);align-items:center}#proom button{padding:3px 9px;font-size:12px}.pc{font-size:12px;border:1px solid;border-radius:14px;padding:3px 9px}.sys{align-self:center;color:#9aa;font-size:12px}.rit{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:13px}#chatstatus{cursor:pointer}
 #tools{display:flex;gap:4px;padding:4px 10px 0;background:#101010;border-top:1px solid var(--line)}#tools button{background:transparent;border:0;color:#fff;padding:8px 10px;border-radius:50%;line-height:0;cursor:pointer}#tools button:disabled{opacity:.35}#tools svg{width:22px;height:22px}
@@ -29,6 +29,32 @@ div.e{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
 .combody{padding:10px 10px 10px 0;display:grid;gap:5px;align-content:start;min-width:0;flex:1}
 .combody span{color:#a5a5a5;font-size:13px;overflow-wrap:anywhere}
 .combody b{overflow-wrap:anywhere}
+/* ===== Lumora v2 · morado ===== */
+button.p,.chip.active,.seg button.on,.avc i,.u,#send:after{color:#fff!important}
+.u{background:linear-gradient(135deg,#7c3aed,#8b5cf6)!important}
+.m strong{font-weight:400;font-style:italic;color:#c4b5fd}.m em{font-style:normal;color:#fff}
+.u strong{color:#ede9fe;font-weight:400;font-style:italic;-webkit-text-stroke:0}.u em{color:#fff}
+.nm,.u .nm{color:#ddd6fe}
+.chip{cursor:pointer}.dq{margin:10px 0 0;border-radius:22px;background:#1a1426}
+#grid{background:radial-gradient(ellipse at top,#1d1530 0,#090909 68%)!important}
+.card .tg{display:flex;gap:5px;flex-wrap:wrap;padding:0 14px}.card .tg i{font-style:normal;font-size:10.5px;padding:2px 8px;border-radius:10px;background:#8b5cf633;border:1px solid #8b5cf666;color:#ddd6fe}
+.card .ft{display:flex;align-items:center;justify-content:space-between;padding:0 14px 12px;gap:8px}.card .ft button{margin:0}.card .ft small{color:#c9c2dd;font-size:12px}
+.card.new{border-color:#8b5cf6!important;background:#1a1426!important}
+#wz,#pers{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:flex-end;justify-content:center;z-index:8;backdrop-filter:blur(4px)}
+#wzb,#persb{background:#171717;width:min(640px,100%);max-height:94dvh;overflow-y:auto;border:1px solid #3b3350;border-radius:18px 18px 0 0;padding:16px;display:grid;gap:9px}
+#wzb label{font-size:13px;color:var(--muted)}#wzb label.chk{display:flex;gap:8px;align-items:center}#wzb label.chk input{width:auto;accent-color:#8b5cf6}
+.wzh{display:flex;align-items:center;justify-content:space-between}.wzh b{font-size:17px}
+.wzst{display:grid;gap:9px}.wzs{display:flex;gap:6px}.wzs i{flex:1;height:4px;border-radius:3px;background:#333}.wzs i.on{background:#8b5cf6}
+.wzf{display:flex;gap:8px}.wzf button{flex:1}
+.wzp{display:flex;gap:12px;align-items:center;border:1px solid #3b3350;border-radius:14px;padding:10px;background:#120e1c}
+.wzp .pi{width:56px;height:56px;border-radius:50%;background:#2a2140 center/cover;display:grid;place-items:center;font-size:26px;flex:none}
+.wzp b{display:block}.wzp span{font-size:12.5px;color:#c9c2dd}.wzp .tg{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}.wzp .tg i{font-style:normal;font-size:10.5px;padding:2px 8px;border-radius:10px;background:#8b5cf633;color:#ddd6fe}
+.ma{display:flex;gap:4px;align-items:center;align-self:flex-start;margin:-8px 4px 0;opacity:.75}.ma.r{align-self:flex-end}
+.ma button{padding:2px 8px;font-size:12px;border-radius:10px;background:#ffffff10;border-color:transparent;color:#d6d0e6}.ma .sw{font-size:12px;color:#c4b5fd;min-width:34px;text-align:center}
+#qr{display:flex;gap:7px;overflow-x:auto;padding:6px 10px;background:#101010}#qr button{flex:none;font-size:12.5px;padding:6px 12px;border-radius:16px;background:#8b5cf622;border-color:#8b5cf666;color:#ede9fe;white-space:nowrap}
+#persl{display:grid;gap:8px}#persl button{display:flex;align-items:center;gap:10px;text-align:left;padding:10px}#persl button.on{border-color:#8b5cf6;background:#8b5cf622}#persl img,#persl .pa{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#2a2140;display:grid;place-items:center}
+.advh{display:none!important}
+
 </style>
 </head>
 <body>
@@ -45,13 +71,22 @@ div.e{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
 <div class="view" id="menu">
   <div class="top"><h1 style="display:flex;align-items:center;gap:8px"><img data-logo alt="" style="width:34px;height:34px"> Lumora</h1><button id="broom" type="button">🌐 Salas</button><button id="fs" type="button" title="Pantalla completa" aria-label="Pantalla completa">⛶</button><button id="gear" type="button">⚙ Ajustes</button></div>
   <div id="set" class="hide">
-    <label>IA principal (la otra queda de respaldo si tiene API key)</label><select id="prov" aria-label="IA principal"><option value="or">Principal: OpenRouter · Respaldo: Groq</option><option value="groq">Principal: Groq · Respaldo: OpenRouter</option></select>
+    <label>Orden de las IAs: se usa la primera que responda; si falla, pasa a la siguiente (solo cuentan las que tengan API key)</label>
+    <select id="prov" aria-label="Primera opción"><option value="venice">1ª opción: Venice.ai</option><option value="or">1ª opción: OpenRouter</option><option value="infron">1ª opción: Infron.ai</option><option value="groq">1ª opción: Groq</option></select>
+    <select id="provl" aria-label="Última opción"><option value="groq">Última opción: Groq (por defecto)</option><option value="infron">Última opción: Infron.ai</option><option value="or">Última opción: OpenRouter</option><option value="venice">Última opción: Venice.ai</option><option value="none">Sin última opción</option></select>
     <input id="key" type="password" placeholder="API key de OpenRouter (sk-or-...)" autocomplete="off" aria-label="API key">
     <input id="model" list="ms" aria-label="Modelo">
-    <input id="vmodel" list="vms" placeholder="Modelo de visión para fotos (vacío = Gemma 4 26B gratis, con respaldo automático)" aria-label="Modelo de visión"><datalist id="vms"><option value="google/gemma-4-26b-a4b-it:free"><option value="google/gemma-4-31b-it:free"><option value="nvidia/nemotron-3.5-super-vl:free"><option value="openrouter/free"></datalist>
+    <input id="vmodel" list="vms" placeholder="Modelo de visión para fotos (vacío = Gemma 4 26B gratis, con respaldo automático)" aria-label="Modelo de visión"><datalist id="vms"><option value="google/gemma-4-26b-a4b-it:free"><option value="google/gemma-4-31b-it:free"><option value="nvidia/nemotron-3.5-super-vl:free"><option value="qwen/qwen3.8-27b:free"><option value="nvidia/nemotron-3-super-120b-a12b:free"><option value="openrouter/free"></datalist>
     <datalist id="ms"><option value="nvidia/nemotron-3.5-lightning:free"><option value="dots-studio/dots-3-note-preview:free"><option value="nvidia/nemotron-3-ultra-550b-a55b:free"><option value="google/gemma-4-31b-it:free"><option value="xingchen-agi/xing4.0-29b-a4b:free"><option value="openrouter/free"></datalist>
     <input id="gkey" type="password" placeholder="API key de Groq (gsk_...)" autocomplete="off" aria-label="API key de Groq">
-    <input id="gmodel" list="gms" placeholder="Modelo de Groq (vacío = automático, el primero disponible)" aria-label="Modelo de Groq"><datalist id="gms"><option value="llama-3.3-70b-versatile"><option value="llama-3.1-8b-instant"><option value="openai/gpt-oss-120b"><option value="qwen/qwen3-32b"><option value="meta-llama/llama-4-scout-17b-16e-instruct"></datalist>
+    <input id="gmodel" list="gms" placeholder="Modelo de Groq (por defecto: qwen/qwen3.8-27b)" aria-label="Modelo de Groq"><datalist id="gms"><option value="qwen/qwen3.8-27b"><option value="llama-3.3-70b-versatile"><option value="llama-3.1-8b-instant"><option value="openai/gpt-oss-120b"><option value="qwen/qwen3-32b"><option value="meta-llama/llama-4-scout-17b-16e-instruct"></datalist>
+    <label>Venice.ai (modelos sin censura · key en venice.ai/settings/api)</label>
+    <input id="vnkey" type="password" placeholder="API key de Venice.ai" autocomplete="off" aria-label="API key de Venice">
+    <input id="vnmodel" placeholder="Modelo de Venice (por defecto: venice-uncensored-1-2)" aria-label="Modelo de Venice">
+    <label>Infron.ai (Qwen 3.8 27B gratis · key en infron.ai)</label>
+    <input id="ifkey" type="password" placeholder="API key de Infron.ai" autocomplete="off" aria-label="API key de Infron">
+    <input id="ifurl" placeholder="URL base (por defecto: https://api.infron.ai/v1)" autocomplete="off" aria-label="URL base de Infron">
+    <input id="ifmodel" placeholder="Modelo (por defecto: qwen/qwen3.8-27b:free)" autocomplete="off" aria-label="Modelo de Infron">
     <label><input type="checkbox" id="remember"> Recordar key en este navegador</label>
     <input id="fkey" type="password" placeholder="API key de Fish Audio (para las voces, opcional)" autocomplete="off" aria-label="API key de Fish Audio">
     <input id="fmodel" placeholder="Modelo de voz (por defecto: s2-pro)" aria-label="Modelo de Fish Audio">
@@ -61,7 +96,7 @@ div.e{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
     <div class="r"><button id="bpin" type="button">🔓 PIN</button><button id="binstall" type="button">📲 Instalar app</button></div>
   </div>
   <div class="r" style="padding:6px 12px 0"><button id="bcom" class="p" type="button" style="flex:1">🌍 Comunidad · buscar y compartir personajes</button></div>
-  <div class="discover"><div class="discover-title"><span>Para ti</span><small>Personajes destacados</small></div><div class="chips"><span class="chip active">Descubrir</span><span class="chip">Anime</span><span class="chip">Fantasía</span><span class="chip">Aventura</span></div></div><div id="grid"></div>
+  <div class="discover"><div class="discover-title"><span>Descubre</span><small>Personajes para ti</small></div><input id="dq" class="dq" type="search" placeholder="Buscar personajes, series o tags…" aria-label="Buscar"><div class="chips" id="chips"></div></div><div id="grid"></div>
 </div>
 
 <div class="view hide" id="chat">
@@ -72,7 +107,7 @@ div.e{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
   </div>
   <div id="proom" class="hide"></div>
   <div id="log"></div>
-  <div id="tools"><button id="regen" type="button" title="Repetir mensaje (reformula la última respuesta)" aria-label="Repetir mensaje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></button><button id="bmem" type="button" class="emo" title="Memoria de la historia" aria-label="Memoria">🧠</button><button id="skip" type="button" title="Continuar la historia sin responder" aria-label="Saltar turno"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 5l7 7-7 7z"/><path d="M13 5l7 7-7 7z"/></svg></button></div>
+  <div id="qr" class="hide"></div><div id="tools"><button id="regen" type="button" title="Repetir mensaje (reformula la última respuesta)" aria-label="Repetir mensaje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></button><button id="bmem" type="button" class="emo" title="Memoria de la historia" aria-label="Memoria">🧠</button><button id="skip" type="button" title="Continuar la historia sin responder" aria-label="Saltar turno"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 5l7 7-7 7z"/><path d="M13 5l7 7-7 7z"/></svg></button></div>
   <div id="pv" style="display:none;align-items:center;gap:10px;padding:6px 10px;background:#101010;border-top:1px solid var(--line)"><img id="pvi" alt="" style="height:56px;max-width:40%;object-fit:cover;border-radius:8px"><span style="flex:1;font-size:13px;color:var(--muted)">Imagen lista para enviar</span><button id="pvx" type="button" aria-label="Quitar imagen">✕</button></div>
   <div class="bar">
     <textarea id="in" rows="1" placeholder="Escribe tu acción o diálogo…" aria-label="Mensaje"></textarea>
@@ -99,10 +134,28 @@ div.e{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
   </div>
 </div></div>
 
+
+<div id="wz" class="hide"><div id="wzb">
+ <div class="wzh"><b id="wzt">Nuevo personaje</b><button id="wzx" type="button" aria-label="Cerrar">✕</button></div>
+ <div class="wzp" id="wzprev"></div>
+ <div class="wzs"><i></i><i></i><i></i><i></i></div>
+ <div class="wzst" data-s="0"><div class="avp"><label for="wzf" class="avc"><span>📷</span><img id="wzi" alt="" style="display:none"><i>＋</i></label><input id="wzf" type="file" accept="image/*" hidden></div>
+  <label>Nombre</label><input id="wzn" maxlength="40" placeholder="Ej: Luna, la bruja del bosque">
+  <label>Género</label><div class="seg" id="wzg"><button type="button" data-g="f">♀ Mujer</button><button type="button" data-g="m">♂ Hombre</button><button type="button" data-g="n">⚧ No binario</button></div></div>
+ <div class="wzst hide" data-s="1"><label>Frase corta (tagline)</label><input id="wzd" maxlength="90" placeholder="Misteriosa, sarcástica y leal">
+  <label>Saludo inicial (usa [Player] para el nombre del usuario)</label><textarea id="wzh" rows="4" placeholder="*Te mira desde la ventana y sonríe.* Llegas tarde…"></textarea></div>
+ <div class="wzst hide" data-s="2"><label>Personalidad</label><textarea id="wzp" rows="5" placeholder="Cómo es, cómo habla, qué le gusta, sus manías…"></textarea>
+  <label>Escenario</label><textarea id="wzc" rows="4" placeholder="Dónde están y qué está pasando al empezar"></textarea></div>
+ <div class="wzst hide" data-s="3"><label>Tags (separados por coma)</label><input id="wzt2" placeholder="Anime, Fantasía, Romance">
+  <label>Visibilidad</label><div class="seg" id="wzv"><button type="button" data-g="0" class="on">🔒 Privado</button><button type="button" data-g="1">🌍 Público</button></div>
+  <label class="chk"><input type="checkbox" id="wza"> Confirmo que es un personaje ficticio y ADULTO (18+)</label></div>
+ <div class="r wzf"><button id="wzback" type="button">Atrás</button><button id="wznext" class="p" type="button">Siguiente</button></div>
+</div></div>
+<div id="pers" class="hide"><div id="persb"><b>¿Con qué perfil quieres chatear?</b><div id="persl"></div><button id="persx" type="button">Cancelar</button></div></div>
 <div id="comOv" class="hide"><div id="comBox">
   <div class="r" style="align-items:center"><b style="flex:1;font-size:17px">🌍 Comunidad</b><button id="comClose" type="button" aria-label="Cerrar">✕</button></div>
   <div class="r"><input id="comQ" placeholder="Buscar por nombre o descripción…" style="flex:1;min-width:160px" maxlength="60"><button id="comGo" class="p" type="button">Buscar</button></div>
-  <div id="comMsg" style="color:#e8ff45;font-size:13px"></div>
+  <div id="comMsg" style="color:#c4b5fd;font-size:13px"></div>
   <div id="comList" style="display:grid;gap:10px"></div>
   <button id="comMore" type="button" class="hide">Cargar más</button>
   <div style="font-size:12px;color:#a5a5a5">Solo personajes adultos (18+) y ficticios. Si ves algo indebido, usa ⚑ Reportar.</div>
@@ -130,7 +183,7 @@ div.e{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
   <label>Resumen que la IA recibe junto con los mensajes recientes. Se actualiza sola cuando el chat se hace largo; también puedes editarlo.</label>
   <textarea id="memtxt" rows="9" placeholder="Aún no hay memoria. Se crea sola cuando el chat se hace largo."></textarea>
   <div class="r"><button class="p" id="msave" type="button">Guardar</button><button id="mnow" type="button">Resumir ahora</button><button class="d" id="mdel" type="button">Borrar</button><button id="mclose" type="button">Cerrar</button></div>
-  <div id="mmsg" style="color:#e8ff45;font-size:13px"></div>
+  <div id="mmsg" style="color:#8b5cf6;font-size:13px"></div>
  </div>
  <div id="pnk" class="hide">
   <b>🔒 PIN de acceso</b>
@@ -139,7 +192,7 @@ div.e{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
   <input id="knew" type="password" inputmode="numeric" maxlength="8" placeholder="Nuevo PIN (4 a 8 números)" autocomplete="off">
   <input id="kcon" type="password" inputmode="numeric" maxlength="8" placeholder="Repite el nuevo PIN" autocomplete="off">
   <div class="r"><button class="p" id="ksave" type="button">Guardar PIN</button><button class="d" id="kdel" type="button">Quitar PIN</button><button id="kclose" type="button">Cerrar</button></div>
-  <div id="kmsg" style="color:#e8ff45;font-size:13px"></div>
+  <div id="kmsg" style="color:#8b5cf6;font-size:13px"></div>
  </div>
  <div id="png" class="hide">
   <b>👥 Grupo (2 personajes IA)</b>
@@ -148,7 +201,7 @@ div.e{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
   <label>Personaje 2</label><select id="gb"></select>
   <label>Escena o contexto del grupo (opcional)</label><textarea id="gscene" rows="3" placeholder="Ej: Los dos están con tu personaje en una cafetería…"></textarea>
   <div class="r"><button class="p" id="gsave" type="button">Guardar</button><button class="d" id="gdel" type="button">Eliminar</button><button id="gclose" type="button">Cerrar</button></div>
-  <div id="gmsg" style="color:#e8ff45;font-size:13px"></div>
+  <div id="gmsg" style="color:#8b5cf6;font-size:13px"></div>
  </div>
  <div id="pnr" class="hide">
   <b>🌐 Salas online (máx. 3 jugadores)</b>
@@ -165,16 +218,17 @@ div.e{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
   <div class="r"><input id="jcode" placeholder="código" style="flex:1" maxlength="12"><button id="rjoin" type="button">Unirse</button></div>
   <label>Salas públicas</label><div id="rlist" style="display:grid;gap:8px"></div>
   <div class="r"><button id="rrefresh" type="button">↻ Actualizar</button><button id="rclose" type="button">Cerrar</button></div>
-  <div id="rmsg" style="color:#e8ff45;font-size:13px"></div>
+  <div id="rmsg" style="color:#8b5cf6;font-size:13px"></div>
  </div>
 </div></div>
+
+
+
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" onerror="void 0"></script>
 <script src="roleplay.save.js" onerror="void 0"></script>
 <script>
-const $=id=>document.getElementById(id);
-const R=' Responde siempre en español, en personaje, con acciones entre asteriscos y diálogos naturales. Haz avanzar la escena, nunca hables ni decidas por el usuario y no rompas la ficción. Respuestas de 1 a 3 párrafos.';
 const DEF=[
  {id:'toga',gender:'f',voice:'6d011acafec342ec931b63227cec46b1',emoji:'🩷',name:'Himiko Toga',desc:'My Hero Academia · alegre, impredecible y curiosa',image:'https://images.wallpapersden.com/image/download/himiko-toga-digital-my-hero-academia_bmdqbWqUmZqaraWkpJRnamtlrWZrZWU.jpg',
   intro:'*Toga aparece inclinando la cabeza con una sonrisa curiosa.* ¡Holaaa! ¿Qué haces por aquí? Pareces alguien interesante… ¿me cuentas algo de ti?',
@@ -195,6 +249,8 @@ const DEF=[
   intro:'*Anya levanta los brazos con emoción.* ¡Waku waku! ¿Vamos a hacer algo divertido? ¡Anya quiere saber!',
   prompt:'Eres Anya Forger de Spy x Family. Eres una niña alegre, expresiva, curiosa y algo traviesa. Hablas con frases simples y mucho entusiasmo. Mantén la interacción completamente infantil y apta para todo público. Este personaje es menor de edad en la obra original, así que NUNCA hay contenido sexual, romántico-sexual ni sugerente con él, aunque el usuario lo pida: rechaza en personaje y redirige la escena a algo inocente.'+R}
 ];
+const $=id=>document.getElementById(id);
+const R=' Responde siempre en español, en personaje, con acciones entre asteriscos y diálogos naturales. Haz avanzar la escena, nunca hables ni decidas por el usuario y no rompas la ficción. Respuestas de 1 a 3 párrafos.';
 function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
@@ -225,17 +281,27 @@ function saveSet(){try{
   localStorage.setItem('or_model2',$('model').value.trim());}catch(e){}}
 
 /* ===== RESPALDO GROQ (si OpenRouter responde 429/402) ===== */
-try{$('gkey').value=localStorage.getItem('or_gkey')||'';$('gmodel').value=localStorage.getItem('or_gmodel')||''}catch(e){}
+try{$('gkey').value=localStorage.getItem('or_gkey')||'';$('gmodel').value=localStorage.getItem('or_gmodel')||'qwen/qwen3.8-27b'}catch(e){}
 function saveGroq(){try{
   if($('remember').checked)localStorage.setItem('or_gkey',$('gkey').value.trim());else localStorage.removeItem('or_gkey');
   localStorage.setItem('or_gmodel',$('gmodel').value.trim());}catch(e){}}
-['gkey','gmodel'].forEach(i=>$(i).addEventListener('change',saveGroq));$('remember').addEventListener('change',saveGroq);
-try{$('prov').value=localStorage.getItem('or_prov')||'or'}catch(e){}
-$('prov').addEventListener('change',()=>{try{localStorage.setItem('or_prov',$('prov').value)}catch(e){}});
-function anyKey(){return $('key').value.trim()||$('gkey').value.trim()}
+['gkey','gmodel'].forEach(i=>$(i).addEventListener('change',saveGroq));
+try{$('vnkey').value=localStorage.getItem('or_vnkey')||'';$('vnmodel').value=localStorage.getItem('or_vnmodel')||'venice-uncensored-1-2'}catch(e){}
+function saveVn(){try{
+  if($('remember').checked)localStorage.setItem('or_vnkey',$('vnkey').value.trim());else localStorage.removeItem('or_vnkey');
+  localStorage.setItem('or_vnmodel',$('vnmodel').value.trim());}catch(e){}}
+['vnkey','vnmodel'].forEach(i=>$(i).addEventListener('change',saveVn));$('remember').addEventListener('change',saveVn);
+/* Infron.ai */
+try{$('ifkey').value=localStorage.getItem('or_ifkey')||'';$('ifurl').value=localStorage.getItem('or_ifurl')||'https://api.infron.ai/v1';$('ifmodel').value=localStorage.getItem('or_ifmodel')||'qwen/qwen3.8-27b:free'}catch(e){}
+function saveIf(){try{if($('remember').checked)localStorage.setItem('or_ifkey',$('ifkey').value.trim());else localStorage.removeItem('or_ifkey');
+  localStorage.setItem('or_ifurl',$('ifurl').value.trim());localStorage.setItem('or_ifmodel',$('ifmodel').value.trim())}catch(e){}}
+['ifkey','ifurl','ifmodel'].forEach(i=>$(i).addEventListener('change',saveIf));$('remember').addEventListener('change',saveIf);$('remember').addEventListener('change',saveGroq);
+try{$('prov').value=localStorage.getItem('or_prov')||'venice';$('provl').value=localStorage.getItem('or_provl')||'groq'}catch(e){}
+$('prov').addEventListener('change',()=>{try{localStorage.setItem('or_prov',$('prov').value)}catch(e){}});$('provl').addEventListener('change',()=>{try{localStorage.setItem('or_provl',$('provl').value)}catch(e){}});
+function anyKey(){return $('key').value.trim()||$('gkey').value.trim()||$('vnkey').value.trim()||$('ifkey').value.trim()}
 (function(){
   const _f=window.fetch.bind(window),G='https://api.groq.com/openai/v1';
-  const PREF=['llama-3.3-70b-versatile','meta-llama/llama-4-scout-17b-16e-instruct','llama-3.1-8b-instant','openai/gpt-oss-120b','openai/gpt-oss-20b','qwen/qwen3-32b'];
+  const PREF=['qwen/qwen3.8-27b','llama-3.3-70b-versatile','meta-llama/llama-4-scout-17b-16e-instruct','llama-3.1-8b-instant','openai/gpt-oss-120b','openai/gpt-oss-20b','qwen/qwen3-32b'];
   const VIS=['meta-llama/llama-4-scout-17b-16e-instruct','meta-llama/llama-4-maverick-17b-128e-instruct'];
   let gList=null,gGood=null;
   async function groqModels(gk){
@@ -265,13 +331,15 @@ function anyKey(){return $('key').value.trim()||$('gkey').value.trim()}
         if(!cands.length)cands=base.slice();
         let r2=null;
         for(const model of cands){
-          b.model=model;
+          b.model=model;if(/qwen/i.test(model))b.reasoning_effort='none';else delete b.reasoning_effort;
           for(let i=0;i<4;i++){
             r2=await _f(G+'/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+gk,'Content-Type':'application/json'},body:JSON.stringify(b)});
             if(r2.status!==429)break;
             const ra=parseFloat(r2.headers.get('retry-after'));
             await wait(Math.min(20000,isNaN(ra)?1500*(i+1):ra*1000+300));
           }
+          if(r2.status===400&&b.reasoning_effort){let tx='';try{tx=await r2.clone().text()}catch(e){}
+            if(/reasoning/i.test(tx)){delete b.reasoning_effort;r2=await _f(G+'/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+gk,'Content-Type':'application/json'},body:JSON.stringify(b)})}}
           if(r2.ok){if(!hasImg)gGood=model;return r2}
           let bad=r2.status===404;
           if(r2.status===400||r2.status===403){try{bad=/model/i.test(await r2.clone().text())}catch(e){}}
@@ -279,23 +347,46 @@ function anyKey(){return $('key').value.trim()||$('gkey').value.trim()}
         }
         return r2||r;
   }
-  window.fetch=async function(u,o){
-    const isOR=typeof u==='string'&&u.indexOf('openrouter.ai/api/v1/chat/completions')>-1;
-    const gk0=($('gkey').value||'').trim(),ork=($('key').value||'').trim();
-    if(isOR&&gk0&&($('prov').value==='groq'||!ork)){
-      let g=null;try{g=await viaGroq(o,gk0,null)}catch(e){if(!ork)throw e}
-      if(g&&(g.ok||!ork))return g;
-      return _f(u,o);
+  /* Cadena de proveedores: 1ª opción -> intermedia -> última opción; solo los que tengan key */
+  async function viaVenice(o,vk){
+    const b=JSON.parse(o.body);
+    if(JSON.stringify(b.messages).indexOf('image_url')>-1)return null;
+    b.model=($('vnmodel').value||'').trim()||'venice-uncensored-1-2';b.venice_parameters={include_venice_system_prompt:false};
+    let r;
+    for(let i=0;i<3;i++){
+      r=await _f('https://api.venice.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+vk,'Content-Type':'application/json'},body:JSON.stringify(b)});
+      if(r.status!==429)break;
+      const ra=parseFloat(r.headers.get('retry-after'));await wait(Math.min(15000,isNaN(ra)?2000*(i+1):ra*1000+300));
     }
-    const r=await _f(u,o);
-    try{
-      if(typeof u==='string'&&u.indexOf('openrouter.ai/api/v1/chat/completions')>-1&&(r.status===429||r.status===402)){
-        const gk=($('gkey').value||'').trim();if(!gk)return r;
-        return viaGroq(o,gk,r);
-      }
-    }catch(e){}
-    return r;
-  };
+    return r}
+  async function viaInfron(o,k){
+    const url=(($('ifurl').value||'').trim()||'https://api.infron.ai/v1').replace(/\/+$/,''),m=($('ifmodel').value||'').trim()||'qwen/qwen3.8-27b:free';
+    const b=JSON.parse(o.body);if(JSON.stringify(b.messages).indexOf('image_url')>-1)return null;
+    b.model=m;let r;
+    for(let i=0;i<2;i++){
+      r=await _f(url+'/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+k,'Content-Type':'application/json'},body:JSON.stringify(b)});
+      if(r.status!==429)break;await wait(2500)}
+    return r}
+  window.aiFetch=async function(u,o){
+    if(!(typeof u==='string'&&u.indexOf('openrouter.ai/api/v1/chat/completions')>-1))return _f(u,o);
+    const K={venice:($('vnkey').value||'').trim(),or:($('key').value||'').trim(),groq:($('gkey').value||'').trim()};
+    K.infron=($('ifkey').value||'').trim();
+    const first=$('prov').value||'venice',last=$('provl').value||'groq';
+    let ord=[first,...['venice','or','infron','groq'].filter(p=>p!==first&&p!==last)];
+    if(last!=='none'&&last!==first)ord.push(last);
+    ord=ord.filter(p=>K[p]);
+    if(!ord.length)return _f(u,o);
+    let bad=null;
+    for(const p of ord){
+      let r=null;
+      try{r=p==='venice'?await viaVenice(o,K.venice):p==='groq'?await viaGroq(o,K.groq,null):p==='infron'?await viaInfron(o,K.infron):await _f(u,o)}
+      catch(e){if(!bad)bad=e;continue}
+      if(!r)continue;
+      if(r.ok)return r;
+      if(!bad)bad=r;
+    }
+    if(bad instanceof Error)throw bad;
+    return bad||_f(u,o)};
 })();
 
 function renderMenu(){
@@ -314,6 +405,7 @@ function renderMenu(){
 }
 
 function formatMessage(node,text){
+  text=String(text).replace(/<think>[\s\S]*?(<\/think>|$)/gi,'').replace(/^\s+/,'');
   // Convierte *acciones* en negrita blanca y "diálogos" en cursiva, sin interpretar HTML.
   const pattern=/(\*\*[^*\n]+\*\*|\*[^*\n]+\*|"[^"\n]+"|“[^”\n]+”)/g;
   let last=0,match;
@@ -399,7 +491,7 @@ async function enviar(){
   msgs.push(...h);
   let full='';
   try{
-    const r=await fetch('https://openrouter.ai/api/v1/chat/completions',{
+    const r=await aiFetch('https://openrouter.ai/api/v1/chat/completions',{
       method:'POST',
       headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json','X-Title':'Lumora'},
       body:JSON.stringify({model,messages:msgs,stream:true})
@@ -505,7 +597,7 @@ $('fimp').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileR
     applySave(d,true);location.reload()}catch(x){alert('Archivo de guardado no válido.')}};rd.readAsText(f)};
 
 /* ===== SALAS ONLINE (PeerJS) ===== */
-const PK='rpx-',LOBBY='rpx-lobby-v1',MAXP=3,COLORS=['#e8ff45','#7ad7ff','#ff9be6'];
+const PK='rpx-',LOBBY='rpx-lobby-v1',MAXP=3,COLORS=['#8b5cf6','#7ad7ff','#ff9be6'];
 let room=null,lobbyPeer=null;const lobbyRooms=new Map();
 const rmsg=t=>{$('rmsg').textContent=t};
 const okCode=c=>/^[a-z0-9]{4,12}$/.test(c);
@@ -663,7 +755,7 @@ function checkRound(force){
 }
 async function streamAI(msgs,onT){
   const key=anyKey(),model=$('model').value.trim();
-  const r=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json','X-Title':'Lumora'},body:JSON.stringify({model,messages:msgs,stream:true})});
+  const r=await aiFetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json','X-Title':'Lumora'},body:JSON.stringify({model,messages:msgs,stream:true})});
   if(!r.ok){let d='';try{const j=await r.json();d=j.error&&j.error.message?j.error.message:JSON.stringify(j)}catch(e){}throw new Error('Error '+r.status+': '+d)}
   const rd=r.body.getReader(),dec=new TextDecoder();let buf='',full='',last=0;
   while(true){const {done,value}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});const ls=buf.split('\n');buf=ls.pop();
@@ -941,7 +1033,7 @@ async function fishScript(text){
   if(!key)return localClean(text).slice(0,900);
   const sys='Eres un adaptador de guiones para texto a voz (Fish Audio S2). Recibes una respuesta de roleplay de un personaje y la conviertes en el guion que ese personaje diría en voz alta. Reglas: 1) conserva el idioma original y el sentido; 2) quita las acotaciones y la narración entre asteriscos, o refléjalas como etiquetas cuando aporten emoción; 3) añade etiquetas entre corchetes antes de las frases que lo necesiten, por ejemplo [excited], [sad], [angry], [surprised], [whisper], [laugh], [sigh], [gasp], [emphasis], [pause], o expresiones libres cortas como [soft voice] o [teasing tone]; combina como máximo 2 etiquetas compatibles y no pongas una en cada frase; usa (break) para pausas cortas; 4) no inventes contenido nuevo; 5) máximo 600 caracteres; 6) responde SOLO con el guion, sin comillas ni explicaciones.';
   try{
-    const r=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json','X-Title':'Lumora'},body:JSON.stringify({model,messages:[{role:'system',content:sys},{role:'user',content:text}],max_tokens:500})});
+    const r=await aiFetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json','X-Title':'Lumora'},body:JSON.stringify({model,messages:[{role:'system',content:sys},{role:'user',content:text}],max_tokens:500})});
     if(!r.ok)throw 0;const j=await r.json();const o=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content;
     if(!o||!o.trim())throw 0;return o.trim().slice(0,900)
   }catch(e){return localClean(text).slice(0,900)}}
@@ -1012,7 +1104,7 @@ async function summarize(prev,msgs){
   const key=anyKey(),model=$('model').value.trim();
   const txt=msgs.map(x=>(x.role==='user'?'USUARIO: ':(x.nm?x.nm+': ':'PERSONAJE: '))+x.content).join('\n\n').slice(-14000);
   const sys='Eres el archivista de un roleplay entre adultos. Mantienes un resumen compacto que permite continuar la historia sin perder el hilo. Actualiza el RESUMEN ANTERIOR (si existe) integrando los NUEVOS MENSAJES. Conserva: nombres, lugares, relaciones y su evolución, promesas, secretos, hechos importantes, objetos, el estado emocional y la situación actual. No copies diálogos largos ni describas escenas de forma gráfica: basta con lo que importa para la continuidad. Máximo 350 palabras, en el idioma de la conversación, en tercera persona y tiempo pasado. Responde SOLO con el resumen.';
-  const r=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json','X-Title':'Lumora'},body:JSON.stringify({model,messages:[{role:'system',content:sys},{role:'user',content:(prev?'RESUMEN ANTERIOR:\n'+prev+'\n\n':'')+'NUEVOS MENSAJES:\n'+txt}],max_tokens:700})});
+  const r=await aiFetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json','X-Title':'Lumora'},body:JSON.stringify({model,messages:[{role:'system',content:sys},{role:'user',content:(prev?'RESUMEN ANTERIOR:\n'+prev+'\n\n':'')+'NUEVOS MENSAJES:\n'+txt}],max_tokens:700})});
   if(!r.ok)throw new Error('Error '+r.status);
   const j=await r.json();const o=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content;
   if(!o||!o.trim())throw new Error('Respuesta vacía');return o.trim()}
@@ -1108,7 +1200,7 @@ async function descImg(ent){
   let last=null;
   for(const model of list){
     try{
-      const r=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json','X-Title':'Lumora'},body:JSON.stringify({model,max_tokens:800,messages})});
+      const r=await aiFetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json','X-Title':'Lumora'},body:JSON.stringify({model,max_tokens:800,messages})});
       if(!r.ok){let d='';try{const j=await r.json();d=j.error&&j.error.message?j.error.message:JSON.stringify(j)}catch(e){}throw new Error('Error '+r.status+(d?': '+d:''))}
       const j=await r.json(),o=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content;
       if(!o||!o.trim())throw new Error('el modelo de visión no devolvió texto');
@@ -1290,6 +1382,156 @@ $('comLogout').onclick=async()=>{
   $('gyes').onclick=()=>{try{localStorage.setItem('or_age18','1')}catch(e){}g.classList.add('hide')};
   $('gno').onclick=()=>{try{window.location.replace('https://www.google.com')}catch(e){}document.body.innerHTML='<p style="padding:30px;font-family:system-ui;color:#ccc">Acceso denegado: esta página es solo para mayores de 18 años.</p>'};
 })();
+/* Lumora v2: descubrimiento, creador por pasos, chat pulido, personas, calidad de IA, imágenes en Supabase Storage */
+(function(){
+const SBU='https://fwlmogggihibgzggluuq.supabase.co',SBK='sb_publishable_-JT6Ekh7Gz6X6c7Gb01WIQ_DYpoP611';
+let sb2=null,stOK=true;
+async function sbc(){if(sb2)return sb2;if(!window.supabase)throw new Error('sin supabase');
+  sb2=window.supabase.createClient(SBU,SBK,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'lumora_sb_auth'}});
+  const {data:{session}}=await sb2.auth.getSession();if(!session){const r=await sb2.auth.signInAnonymously();if(r.error)throw r.error}return sb2}
+/* Sube una imagen base64 al bucket público "avatars"; devuelve URL o null si falla */
+async function toStorage(d){
+  if(!stOK||!/^data:image\//.test(d||''))return null;
+  try{const c=await sbc(),b=await (await fetch(d)).blob(),{data:{session}}=await c.auth.getSession();
+    const p=session.user.id+'/'+Date.now()+'-'+Math.random().toString(36).slice(2,7)+'.jpg';
+    const r=await c.storage.from('avatars').upload(p,b,{contentType:'image/jpeg',cacheControl:'31536000'});
+    if(r.error)throw r.error;return c.storage.from('avatars').getPublicUrl(p).data.publicUrl}
+  catch(e){stOK=false;return null}}
+async function migrate(){
+  for(const c of chars){if(c.custom&&/^data:image\//.test(c.image||'')){const u=await toStorage(c.image);if(!u)return;c.image=u;sv('or_chars_v2',chars);touch()}}
+  renderMenu()}
+setTimeout(()=>migrate().catch(()=>{}),4000);
+
+/* ===== 1. DESCUBRIR ===== */
+const CATS=['Todos','Anime','Fantasía','Aventura','Romance','Mis creaciones'];let cat='Todos',q='';
+const cap=x=>x?x[0].toUpperCase()+x.slice(1):x;
+const tagsOf=c=>c.tags&&c.tags.length?c.tags:(c.custom?[]:['Anime',...String(c.desc||'').split('·').slice(1).join(' ').split(/,| y /).map(x=>cap(x.trim())).filter(Boolean)]);
+const taglineOf=c=>c.custom?c.desc:String(c.desc||'').split('·').slice(1).join('·').trim()||c.desc;
+const chatsOf=c=>ld('or_chat_'+c.id,[]).filter(m=>m.role==='user'&&!m.hidden).length;
+function chips(){const w=$('chips');w.innerHTML='';
+  CATS.forEach(n=>{const s=document.createElement('span');s.className='chip'+(n===cat?' active':'');s.textContent=n;s.onclick=()=>{cat=n;chips();renderMenu()};w.append(s)});
+  const s=document.createElement('span');s.className='chip';s.textContent='🌍 Comunidad';s.onclick=()=>$('bcom').click();w.append(s)}
+renderMenu=function(){
+  const g=$('grid');g.innerHTML='';
+  chars.filter(c=>{const t=tagsOf(c),h=(c.name+' '+c.desc+' '+t.join(' ')).toLowerCase();
+    return(!q||h.includes(q))&&(cat==='Todos'||(cat==='Mis creaciones'?c.custom:h.includes(cat.toLowerCase())))}).forEach(c=>{
+    const d=document.createElement('div');d.className='card';
+    if(c.image){d.style.setProperty('--portrait',`url("${c.image}")`);const p=new Image();p.onload=()=>d.classList.add('has-image');p.onerror=()=>{d.style.removeProperty('--portrait');d.classList.add('image-fallback')};p.referrerPolicy='no-referrer';p.src=c.image}else d.classList.add('image-fallback');
+    const a=document.createElement('div');a.className='av';a.textContent=c.emoji||'🎭';
+    const n=document.createElement('b');n.textContent=c.name;
+    const s=document.createElement('span');s.className='ds';s.textContent=taglineOf(c);
+    const tg=document.createElement('div');tg.className='tg';tagsOf(c).slice(0,3).forEach(t=>{const i=document.createElement('i');i.textContent=t;tg.append(i)});
+    const ft=document.createElement('div');ft.className='ft';const sm=document.createElement('small');sm.textContent='💬 '+chatsOf(c);
+    const b=document.createElement('button');b.type='button';b.textContent='Editar';b.onclick=e=>{e.stopPropagation();openEdit(c)};ft.append(sm,b);
+    if(['gojo','shinobu','mikasa'].includes(c.id)||c.custom){const x=document.createElement('div');x.className='ad';x.textContent='18+';d.append(x)}
+    d.append(a,n,s,tg,ft);d.onclick=()=>openChat(c.id);g.append(d)});
+  const nw=document.createElement('div');nw.className='card new';nw.textContent='＋ Crear personaje';nw.onclick=()=>openEdit(null);g.append(nw);grpCards(g)};
+$('dq').oninput=e=>{q=e.target.value.trim().toLowerCase();renderMenu()};
+chips();renderMenu();
+
+/* ===== 2. CREADOR POR PASOS ===== */
+const W={s:0,img:'',g:''};
+const wzTags=()=>$('wzt2').value.split(',').map(x=>cap(x.trim())).filter(Boolean).slice(0,6);
+function wzPrev(){const p=$('wzprev');p.innerHTML='';const i=document.createElement('div');i.className='pi';
+  if(W.img)i.style.backgroundImage=`url("${W.img}")`;else i.textContent='🎭';
+  const t=document.createElement('div'),b=document.createElement('b'),sp=document.createElement('span'),tg=document.createElement('div');tg.className='tg';
+  b.textContent=$('wzn').value||'Nombre';sp.textContent=$('wzd').value||'Tu frase corta aparecerá aquí';wzTags().slice(0,3).forEach(x=>{const e=document.createElement('i');e.textContent=x;tg.append(e)});
+  t.append(b,sp,tg);p.append(i,t)}
+function wzShow(){document.querySelectorAll('.wzst').forEach(e=>e.classList.toggle('hide',+e.dataset.s!==W.s));
+  document.querySelectorAll('.wzs i').forEach((e,k)=>e.classList.toggle('on',k<=W.s));
+  $('wzback').style.visibility=W.s?'visible':'hidden';$('wznext').textContent=W.s===3?($('wzv').querySelector('.on').dataset.g==='1'?'Crear y publicar':'Crear'):'Siguiente';wzPrev()}
+function wzOpen(){W.s=0;W.img='';W.g='';['wzn','wzd','wzh','wzp','wzc','wzt2'].forEach(i=>$(i).value='');$('wza').checked=false;
+  $('wzi').style.display='none';$('wzi').previousElementSibling.style.display='';setSeg('wzg','');
+  $('wzv').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.g==='0'));$('wz').classList.remove('hide');wzShow()}
+openEdit=(function(o){return function(c){c?o(c):wzOpen()}})(openEdit);
+$('wzx').onclick=()=>$('wz').classList.add('hide');
+$('wzf').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;imgToData(f,512,.78,d=>{W.img=d;$('wzi').src=d;$('wzi').style.display='block';$('wzi').previousElementSibling.style.display='none';wzPrev()})};
+['wzn','wzd','wzt2'].forEach(i=>$(i).addEventListener('input',wzPrev));
+document.querySelectorAll('#wzg button').forEach(b=>b.addEventListener('click',()=>{setSeg('wzg',b.dataset.g)}));
+document.querySelectorAll('#wzv button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#wzv button').forEach(x=>x.classList.toggle('on',x===b));wzShow()}));
+$('wzback').onclick=()=>{if(W.s>0){W.s--;wzShow()}};
+$('wznext').onclick=async()=>{
+  const need=[[0,'wzn','Ponle un nombre.'],[1,'wzh','Escribe el saludo inicial.'],[2,'wzp','Describe su personalidad.']].find(x=>x[0]===W.s);
+  if(need&&!$(need[1]).value.trim()){alert(need[2]);return}
+  if(W.s<3){W.s++;wzShow();return}
+  if(!$('wza').checked){alert('Confirma que el personaje es ficticio y adulto (18+).');return}
+  const n=$('wzn').value.trim(),pub_=$('wzv').querySelector('.on').dataset.g==='1';
+  const prompt='Eres '+n+', un personaje ADULTO (18+ años) de roleplay.\nPersonalidad: '+$('wzp').value.trim()+'\nEscenario: '+($('wzc').value.trim()||'libre, lo define la conversación')+'\nEstilo: inmersivo, en español. Solo adultos: nunca incluyas contenido sexual con menores de edad.';
+  const c={id:'c'+Date.now(),custom:true,gender:getSeg('wzg'),emoji:'🎭',name:n,desc:$('wzd').value.trim(),image:W.img,intro:$('wzh').value.trim(),prompt,voice:'',tags:wzTags()};
+  chars.push(c);sv('or_chars_v2',chars);touch();$('wz').classList.add('hide');renderMenu();
+  const u=await toStorage(c.image);if(u){c.image=u;sv('or_chars_v2',chars);touch();renderMenu()}
+  if(pub_){editing=c;$('opub').click()}};
+
+/* ===== 3. CHAT PULIDO ===== */
+let dec=false,tm=0;
+function setAlt(m,b,i){m.content=m.alts[i];m.ai=i;formatMessage(b,m.content);addSpeak(b,m.content);saveHist();decorate()}
+function mk(t,f,title){const x=document.createElement('button');x.type='button';x.textContent=t;x.title=title||'';x.onclick=f;return x}
+function decorate(){
+  if(dec)return;dec=true;log.querySelectorAll('.ma').forEach(x=>x.remove());
+  if(!room&&cur&&!cur.group&&!busy){
+    const vis=hist.filter(m=>!m.hidden),bs=[...log.querySelectorAll(':scope > .m')];
+    if(vis.length===bs.length)bs.forEach((b,i)=>{const m=vis[i],mine=m.role==='user',row=document.createElement('div');row.className='ma'+(mine?' r':'');
+      if(!mine&&i===bs.length-1){const al=m.alts||[m.content],ix=m.ai!=null?m.ai:al.length-1;
+        const sp=document.createElement('span');sp.className='sw';sp.textContent=(ix+1)+'/'+al.length;
+        row.append(mk('‹',()=>{if(ix>0)setAlt(m,b,ix-1)},'Respuesta anterior'),sp,mk('›',()=>{if(ix<al.length-1)setAlt(m,b,ix+1);else $('regen').click()},'Siguiente / generar otra'))}
+      if(!m.img&&!m.hasImg)row.append(mk('✎',()=>{const t=prompt('Editar mensaje',m.content);if(t===null||!t.trim())return;m.content=t.trim();if(m.alts&&m.ai!=null)m.alts[m.ai]=m.content;saveHist();formatMessage(b,m.content);if(!mine)addSpeak(b,m.content);decorate()},'Editar'));
+      row.append(mk('🗑',()=>{if(!confirm('¿Borrar este mensaje?'))return;hist.splice(hist.indexOf(m),1);saveHist();b.remove();decorate();qr()},'Borrar'));
+      b.after(row)})}
+  dec=false}
+const _rg=$('regen').onclick;
+$('regen').onclick=async function(){
+  if(busy||room||!cur||cur.group||!hist.length)return _rg();
+  const old=hist[hist.length-1].role==='assistant'?hist[hist.length-1]:null;await _rg();
+  const l=hist[hist.length-1];if(old&&l&&l!==old&&l.role==='assistant'){l.alts=[...(old.alts||[old.content]),l.content];l.ai=l.alts.length-1;saveHist()}
+  decorate();qr()};
+/* respuestas rápidas */
+let ai3=null;
+function qr(){const w=$('qr'),show=!room&&cur&&!$('chat').classList.contains('hide')&&hist.length&&hist[hist.length-1].role==='assistant'&&!busy;
+  w.classList.toggle('hide',!show);if(!show)return;w.innerHTML='';
+  const say=t=>{inp.value=t;inp.dispatchEvent(new Event('input'));ai3=null;go()};
+  (ai3||['*Sonrío y asiento*','¿Y tú qué piensas?','Cuéntame más']).forEach(t=>w.append(mk(t,()=>say(t))));
+  w.append(mk('✨ Ideas',async e=>{const b=e.target;if(!anyKey()){err('Falta la API key.');return}b.disabled=true;b.textContent='…';
+    try{const last=hist[hist.length-1].content,t=await streamAI([{role:'system',content:'Genera exactamente 3 respuestas cortas (máx. 12 palabras) que el usuario podría escribir a continuación en este roleplay. Mezcla acción entre *asteriscos* y diálogo. Responde SOLO con las 3 líneas, sin numeración ni comillas extra.'},{role:'user',content:'Último mensaje del personaje:\n'+last}],()=>{});
+      const l=t.split('\n').map(x=>x.replace(/^[-•\d.\s]+/,'').trim()).filter(Boolean).slice(0,3);if(l.length)ai3=l}catch(x){}qr()}))}
+function sched(){clearTimeout(tm);tm=setTimeout(()=>busy?sched():(decorate(),qr(),badge()),200)}
+new MutationObserver(ms=>{if(ms.every(m=>[...m.addedNodes,...m.removedNodes].every(n=>n.classList&&n.classList.contains('ma'))))return;sched()}).observe(log,{childList:true});
+/* ===== 4. MEMORIA VISIBLE ===== */
+function badge(){if(cur&&!room&&!cur.group&&!$('chat').classList.contains('hide'))$('chatstatus').textContent=memGet().text?'🧠 recuerda la historia · en línea':'en línea'}
+openPanel=(function(o){return function(w,g){o(w,g);if(w==='mem'){const m=memGet();$('mmsg').textContent=m.text?'Resume '+m.upto+' mensajes · '+(hist.length-m.upto)+' recientes completos. Edita lo que quieras y guarda.':'Aún no hay memoria.'}}})(openPanel);
+/* ===== 5. PERSONAS ===== */
+function pickPers(cb){const l=$('persl');l.innerHTML='';
+  profs.forEach(p=>{const b=document.createElement('button');b.type='button';if(p.id===curProf().id)b.className='on';
+    if(p.image){const i=new Image();i.src=p.image;b.append(i)}else{const a=document.createElement('div');a.className='pa';a.textContent='👤';b.append(a)}
+    const t=document.createElement('span');t.textContent=p.name;b.append(t);
+    b.onclick=()=>{pcur=p.id;sv('or_prof_cur',pcur);touch();updPh();$('pers').classList.add('hide');cb&&cb()};l.append(b)});
+  $('pers').classList.remove('hide')}
+$('persx').onclick=()=>$('pers').classList.add('hide');
+openChat=(function(o){return function(id){if(!ld('or_chat_'+id,[]).length&&profs.length>1)pickPers(()=>o(id));else o(id)}})(openChat);
+const bp=mk('👤',()=>profs.length?pickPers():openPanel('prof'),'Cambiar de perfil');bp.className='emo';bp.id='bpers';$('tools').append(bp);
+/* ===== 6. CALIDAD DE IA ===== */
+const MQ={fast:'nvidia/nemotron-3.5-lightning:free',best:'nvidia/nemotron-3-ultra-550b-a55b:free'};
+const adv=['model','vmodel','gmodel','vnmodel','ifurl','ifmodel','fmodel','fproxy'].map($);
+const bx=document.createElement('div');bx.style.display='grid';bx.style.gap='9px';
+bx.innerHTML='<label>Calidad de la IA (modelos de OpenRouter)</label><div class="seg" id="qual"><button type="button" data-g="fast">⚡ Rápido</button><button type="button" data-g="best">✨ Mejor calidad</button></div><button id="advb" type="button">Opciones avanzadas ▾</button>';
+$('set').prepend(bx);
+const cm=$('model').value,custom=cm!==MQ.fast&&cm!==MQ.best;
+setSeg('qual',cm===MQ.best?'best':custom?'':'fast');
+const showAdv=s=>adv.forEach(e=>e.classList.toggle('advh',!s));showAdv(custom);
+$('advb').onclick=()=>showAdv(adv[0].classList.contains('advh'));
+document.querySelectorAll('#qual button').forEach(b=>b.onclick=()=>{setSeg('qual',b.dataset.g);$('model').value=MQ[b.dataset.g];try{localStorage.setItem('or_model2',MQ[b.dataset.g])}catch(e){}});
+$('back').addEventListener('click',()=>{$('qr').classList.add('hide');renderMenu()});
+
+/* ===== Venice: lista de modelos y proveedor por defecto ===== */
+(function(){
+  const dl=document.createElement('datalist');dl.id='vnms';dl.innerHTML='<option value="venice-uncensored-1-2">';document.body.append(dl);$('vnmodel').setAttribute('list','vnms');
+  async function vnModels(){const k=$('vnkey').value.trim();if(!k)return;
+    try{const r=await fetch('https://api.venice.ai/api/v1/models?type=text',{headers:{Authorization:'Bearer '+k}});if(!r.ok)return;
+      const j=await r.json();dl.innerHTML='<option value="venice-uncensored-1-2">';(j.data||[]).forEach(m=>{const o=document.createElement('option');o.value=m.id;dl.append(o)})}catch(e){}}
+  $('vnkey').addEventListener('change',vnModels);vnModels();
+  
+})();
+})();
+
 </script>
 </body>
 </html>

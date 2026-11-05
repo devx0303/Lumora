@@ -229,6 +229,8 @@ button.p,.chip.active,.seg button.on,.avc i,.u,#send:after{color:#fff!important}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" onerror="void 0"></script>
 <script src="roleplay.save.js" onerror="void 0"></script>
 <script>
+const $=id=>document.getElementById(id);
+const R=' Responde siempre en español, en personaje, con acciones entre asteriscos y diálogos naturales. Haz avanzar la escena, nunca hables ni decidas por el usuario y no rompas la ficción. Respuestas de 1 a 3 párrafos.';
 const DEF=[
  {id:'toga',gender:'f',voice:'6d011acafec342ec931b63227cec46b1',emoji:'🩷',name:'Himiko Toga',desc:'My Hero Academia · alegre, impredecible y curiosa',image:'https://images.wallpapersden.com/image/download/himiko-toga-digital-my-hero-academia_bmdqbWqUmZqaraWkpJRnamtlrWZrZWU.jpg',
   intro:'*Toga aparece inclinando la cabeza con una sonrisa curiosa.* ¡Holaaa! ¿Qué haces por aquí? Pareces alguien interesante… ¿me cuentas algo de ti?',
@@ -249,8 +251,6 @@ const DEF=[
   intro:'*Anya levanta los brazos con emoción.* ¡Waku waku! ¿Vamos a hacer algo divertido? ¡Anya quiere saber!',
   prompt:'Eres Anya Forger de Spy x Family. Eres una niña alegre, expresiva, curiosa y algo traviesa. Hablas con frases simples y mucho entusiasmo. Mantén la interacción completamente infantil y apta para todo público. Este personaje es menor de edad en la obra original, así que NUNCA hay contenido sexual, romántico-sexual ni sugerente con él, aunque el usuario lo pida: rechaza en personaje y redirige la escena a algo inocente.'+R}
 ];
-const $=id=>document.getElementById(id);
-const R=' Responde siempre en español, en personaje, con acciones entre asteriscos y diálogos naturales. Haz avanzar la escena, nunca hables ni decidas por el usuario y no rompas la ficción. Respuestas de 1 a 3 párrafos.';
 function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 

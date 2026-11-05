@@ -1,0 +1,12 @@
+name: keepalive
+on:
+  schedule:
+    - cron: '0 12 */3 * *'
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -fsS "https://fwlmogggihibgzggluuq.supabase.co/rest/v1/characters?select=id&limit=1" \
+            -H "apikey: sb_publishable_-JT6Ekh7Gz6X6c7Gb01WIQ_DYpoP611"

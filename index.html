@@ -81,22 +81,20 @@ button,.chip,.card,.seg button,label,summary{touch-action:manipulation;-webkit-t
 <div class="view" id="menu">
   <div class="top"><h1 style="display:flex;align-items:center;gap:8px"><img data-logo alt="" style="width:34px;height:34px"> Lumora</h1><button id="broom" type="button">🌐 Salas</button><button id="fs" type="button" title="Pantalla completa" aria-label="Pantalla completa">⛶</button><button id="gear" type="button">⚙ Ajustes</button></div>
   <div id="set" class="hide">
-    <label>Orden de las IAs: se usa la primera que responda; si falla, pasa a la siguiente (solo cuentan las que tengan API key)</label>
-    <select id="prov" aria-label="Primera opción"><option value="venice">1ª opción: Venice.ai</option><option value="or">1ª opción: OpenRouter</option><option value="infron">1ª opción: Infron.ai</option><option value="groq">1ª opción: Groq</option></select>
-    <select id="provl" aria-label="Última opción"><option value="groq">Última opción: Groq (por defecto)</option><option value="infron">Última opción: Infron.ai</option><option value="or">Última opción: OpenRouter</option><option value="venice">Última opción: Venice.ai</option><option value="none">Sin última opción</option></select>
+    <label>Orden de las IAs: 1º AI Horde (gratis), 2º OpenRouter, 3º Groq. Se usa la primera que responda; si falla, pasa a la siguiente (OpenRouter y Groq solo cuentan si tienen API key).</label>
+    <label>1º · AI Horde (gratis y sin filtros, con cola de espera · sin registro funciona con la key 0000000000)</label>
+    <input id="hkey" type="password" placeholder="API key de AI Horde (vacío = anónima 0000000000)" autocomplete="off" aria-label="API key de AI Horde">
+    <input id="hmodel" list="hms" placeholder="Modelo de AI Horde (vacío = automático: elige el mejor roleplay disponible)" autocomplete="off" aria-label="Modelo de AI Horde"><datalist id="hms"></datalist>
+    <div class="r"><button id="hlist" type="button">🔄 Ver modelos de AI Horde disponibles</button></div>
+    <div id="hmsg" style="font-size:12px;color:#c4b5fd"></div>
+    <label>2º · OpenRouter</label>
     <input id="key" type="password" placeholder="API key de OpenRouter (sk-or-...)" autocomplete="off" aria-label="API key">
     <input id="model" list="ms" aria-label="Modelo">
     <input id="vmodel" list="vms" placeholder="Modelo de visión para fotos (vacío = Gemma 4 26B gratis, con respaldo automático)" aria-label="Modelo de visión"><datalist id="vms"><option value="google/gemma-4-26b-a4b-it:free"><option value="google/gemma-4-31b-it:free"><option value="nvidia/nemotron-3.5-super-vl:free"><option value="qwen/qwen3.8-27b:free"><option value="nvidia/nemotron-3-super-120b-a12b:free"><option value="openrouter/free"></datalist>
     <datalist id="ms"><option value="nvidia/nemotron-3.5-lightning:free"><option value="dots-studio/dots-3-note-preview:free"><option value="nvidia/nemotron-3-ultra-550b-a55b:free"><option value="google/gemma-4-31b-it:free"><option value="xingchen-agi/xing4.0-29b-a4b:free"><option value="openrouter/free"></datalist>
+    <label>3º · Groq (última opción)</label>
     <input id="gkey" type="password" placeholder="API key de Groq (gsk_...)" autocomplete="off" aria-label="API key de Groq">
     <input id="gmodel" list="gms" placeholder="Modelo de Groq (por defecto: qwen/qwen3.8-27b)" aria-label="Modelo de Groq"><datalist id="gms"><option value="qwen/qwen3.8-27b"><option value="llama-3.3-70b-versatile"><option value="llama-3.1-8b-instant"><option value="openai/gpt-oss-120b"><option value="qwen/qwen3-32b"><option value="meta-llama/llama-4-scout-17b-16e-instruct"></datalist>
-    <label>Venice.ai (modelos sin censura · key en venice.ai/settings/api)</label>
-    <input id="vnkey" type="password" placeholder="API key de Venice.ai" autocomplete="off" aria-label="API key de Venice">
-    <input id="vnmodel" placeholder="Modelo de Venice (por defecto: venice-uncensored-1-2)" aria-label="Modelo de Venice">
-    <label>Infron.ai (Qwen 3.8 27B gratis · key en infron.ai)</label>
-    <input id="ifkey" type="password" placeholder="API key de Infron.ai" autocomplete="off" aria-label="API key de Infron">
-    <input id="ifurl" placeholder="URL base (por defecto: https://api.infron.ai/v1)" autocomplete="off" aria-label="URL base de Infron">
-    <input id="ifmodel" placeholder="Modelo (por defecto: qwen/qwen3.8-27b:free)" autocomplete="off" aria-label="Modelo de Infron">
     <label><input type="checkbox" id="remember"> Recordar key en este navegador</label>
     <input id="fkey" type="password" placeholder="API key de Fish Audio (para las voces, opcional)" autocomplete="off" aria-label="API key de Fish Audio">
     <input id="fmodel" placeholder="Modelo de voz (por defecto: s2-pro)" aria-label="Modelo de Fish Audio">
@@ -309,21 +307,16 @@ function saveGroq(){try{
   if($('remember').checked)localStorage.setItem('or_gkey',$('gkey').value.trim());else localStorage.removeItem('or_gkey');
   localStorage.setItem('or_gmodel',$('gmodel').value.trim());}catch(e){}}
 ['gkey','gmodel'].forEach(i=>$(i).addEventListener('change',saveGroq));
-try{$('vnkey').value=localStorage.getItem('or_vnkey')||'';$('vnmodel').value=localStorage.getItem('or_vnmodel')||'venice-uncensored-1-2'}catch(e){}
-function saveVn(){try{
-  if($('remember').checked)localStorage.setItem('or_vnkey',$('vnkey').value.trim());else localStorage.removeItem('or_vnkey');
-  localStorage.setItem('or_vnmodel',$('vnmodel').value.trim());}catch(e){}}
-['vnkey','vnmodel'].forEach(i=>$(i).addEventListener('change',saveVn));$('remember').addEventListener('change',saveVn);
-/* Infron.ai */
-try{$('ifkey').value=localStorage.getItem('or_ifkey')||'';$('ifurl').value=localStorage.getItem('or_ifurl')||'https://api.infron.ai/v1';$('ifmodel').value=localStorage.getItem('or_ifmodel')||'qwen/qwen3.8-27b:free'}catch(e){}
-function saveIf(){try{if($('remember').checked)localStorage.setItem('or_ifkey',$('ifkey').value.trim());else localStorage.removeItem('or_ifkey');
-  localStorage.setItem('or_ifurl',$('ifurl').value.trim());localStorage.setItem('or_ifmodel',$('ifmodel').value.trim())}catch(e){}}
-['ifkey','ifurl','ifmodel'].forEach(i=>$(i).addEventListener('change',saveIf));$('remember').addEventListener('change',saveIf);$('remember').addEventListener('change',saveGroq);
-try{$('prov').value=localStorage.getItem('or_prov')||'venice';$('provl').value=localStorage.getItem('or_provl')||'groq'}catch(e){}
-$('prov').addEventListener('change',()=>{try{localStorage.setItem('or_prov',$('prov').value)}catch(e){}});$('provl').addEventListener('change',()=>{try{localStorage.setItem('or_provl',$('provl').value)}catch(e){}});
-function anyKey(){return $('key').value.trim()||$('gkey').value.trim()||$('vnkey').value.trim()||$('ifkey').value.trim()}
+$('remember').addEventListener('change',saveGroq);
+try{['or_vnkey','or_vnmodel','or_ifkey','or_ifurl','or_ifmodel','or_prov','or_provl'].forEach(k=>localStorage.removeItem(k))}catch(e){}
+/* AI Horde */
+try{$('hkey').value=localStorage.getItem('or_hkey')||'';$('hmodel').value=localStorage.getItem('or_hmodel')||''}catch(e){}
+function saveHorde(){try{if($('remember').checked&&$('hkey').value.trim())localStorage.setItem('or_hkey',$('hkey').value.trim());else localStorage.removeItem('or_hkey');localStorage.setItem('or_hmodel',$('hmodel').value.trim())}catch(e){}}
+['hkey','hmodel'].forEach(i=>$(i).addEventListener('change',saveHorde));$('remember').addEventListener('change',saveHorde);
+function anyKey(){return $('hkey').value.trim()||$('key').value.trim()||$('gkey').value.trim()||'0000000000'}
 (function(){
-  const _f=window.fetch.bind(window),G='https://api.groq.com/openai/v1';
+  const _f=window.fetch.bind(window),_f0=_f,G='https://api.groq.com/openai/v1';
+  const fail=(st,msg)=>new Response(JSON.stringify({error:{message:msg}}),{status:st,headers:{'Content-Type':'application/json'}});
   const PREF=['qwen/qwen3.8-27b','llama-3.3-70b-versatile','meta-llama/llama-4-scout-17b-16e-instruct','llama-3.1-8b-instant','openai/gpt-oss-120b','openai/gpt-oss-20b','qwen/qwen3-32b'];
   const VIS=['meta-llama/llama-4-scout-17b-16e-instruct','meta-llama/llama-4-maverick-17b-128e-instruct'];
   let gList=null,gGood=null;
@@ -370,46 +363,86 @@ function anyKey(){return $('key').value.trim()||$('gkey').value.trim()||$('vnkey
         }
         return r2||r;
   }
-  /* Cadena de proveedores: 1ª opción -> intermedia -> última opción; solo los que tengan key */
-  async function viaVenice(o,vk){
+  /* ===== AI Horde: texto gratis con cola (API asíncrona: enviar -> consultar -> recibir) ===== */
+  const HB='https://aihorde.net/api/v2',HCA='Lumora:1:web';
+  $('hlist').onclick=async()=>{const m=$('hmsg');m.textContent='Consultando…';
+    try{const r=await _f0(HB+'/status/models?type=text',{headers:{'Client-Agent':HCA}});if(!r.ok)throw new Error('HTTP '+r.status);
+      const j=await r.json();j.sort((a,b)=>(b.count||0)-(a.count||0));
+      $('hms').innerHTML=j.slice(0,60).map(x=>'<option value="'+String(x.name).replace(/"/g,'')+'">').join('');
+      const pk=await hordePick(true);
+      m.textContent=(pk.length?'En automático usaría: '+pk.join(' / ')+'. ':'')+j.length+' modelos con workers activos. Toca el campo "Modelo" para elegir (los primeros tienen más workers = menos espera). Top: '+j.slice(0,3).map(x=>x.name+' ('+(x.count||0)+')').join(', ')}
+    catch(e){m.textContent='No se pudo consultar: '+e.message}};
+
+  let hPickC=null;
+  /* Elige solo los mejores modelos de roleplay SIN filtros que tengan workers activos ahora (la lista de la Horde cambia por horas) */
+  async function hordePick(force){
+    if(!force&&hPickC&&Date.now()-hPickC.t<300000)return hPickC.v;
+    let v=[];
+    try{
+      const r=await _f0(HB+'/status/models?type=text',{headers:{'Client-Agent':HCA}});
+      if(r.ok){
+        let ms=(await r.json()).filter(m=>m&&m.name&&(m.count||0)>0);
+        const fast=ms.filter(m=>m.eta==null||m.eta<=600);if(fast.length)ms=fast;
+        const tiny=/(^|[^a-z0-9])(0?\.?5|1|2|3|4)b(?![a-z0-9])|e[24]b|tinyllama/i;
+        const T=[/gemma-4-31b.*heretic/i,/wicked-tutu/i,/skyfall/i,/angelic.?eclipse/i];
+        const gen=/heretic|abliterat|uncensor|hauhau|fimbulvetr|magnum|euryale|cydonia|anubis|mag-mell|tutu|eclipse|roleplay/i;
+        const score=m=>{const n=m.name;for(let i=0;i<T.length;i++)if(T[i].test(n))return i;
+          if(gen.test(n)&&!tiny.test(n))return 10;if(gen.test(n))return 20;if(!tiny.test(n))return 30;return 40};
+        ms.sort((a,b)=>score(a)-score(b)||(b.count||0)-(a.count||0));
+        v=ms.slice(0,3).map(m=>m.name)}
+    }catch(e){}
+    hPickC={t:Date.now(),v};return v}
+  function hordePrompt(msgs,uN,cN){
+    const sys=msgs.filter(m=>m.role==='system').map(m=>String(m.content||'')).join('\n\n').slice(0,6000);
+    const rest=msgs.filter(m=>m.role!=='system'),lines=[];let budget=6000;
+    for(let i=rest.length-1;i>=0;i--){const m=rest[i],t=(typeof m.content==='string'?m.content:'').trim();
+      const l=(m.role==='user'?uN:cN)+': '+t;if(budget-l.length<0&&lines.length>=2)break;budget-=l.length;lines.unshift(l)}
+    return (sys?sys+'\n\n':'')+'### Roleplay (continúa la conversación como '+cN+')\n'+lines.join('\n')+'\n'+cN+':'}
+  async function viaHorde(o,hk,limit){
     const b=JSON.parse(o.body);
     if(JSON.stringify(b.messages).indexOf('image_url')>-1)return null;
-    b.model=($('vnmodel').value||'').trim()||'venice-uncensored-1-2';b.venice_parameters={include_venice_system_prompt:false};
-    let r;
-    for(let i=0;i<3;i++){
-      r=await _f('https://api.venice.ai/api/v1/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+vk,'Content-Type':'application/json'},body:JSON.stringify(b)});
-      if(r.status!==429)break;
-      const ra=parseFloat(r.headers.get('retry-after'));await wait(Math.min(15000,isNaN(ra)?2000*(i+1):ra*1000+300));
-    }
-    return r}
-  async function viaInfron(o,k){
-    const url=(($('ifurl').value||'').trim()||'https://api.infron.ai/v1').replace(/\/+$/,''),m=($('ifmodel').value||'').trim()||'qwen/qwen3.8-27b:free';
-    const b=JSON.parse(o.body);if(JSON.stringify(b.messages).indexOf('image_url')>-1)return null;
-    b.model=m;let r;
-    for(let i=0;i<2;i++){
-      r=await _f(url+'/chat/completions',{method:'POST',headers:{'Authorization':'Bearer '+k,'Content-Type':'application/json'},body:JSON.stringify(b)});
-      if(r.status!==429)break;await wait(2500)}
-    return r}
+    const uN=(typeof profs!=='undefined'&&profs.length&&curProf().name)||'Usuario',cN=(typeof cur!=='undefined'&&cur&&cur.name)||'Personaje';
+    const mdl=($('hmodel').value||'').trim();
+    const auto=mdl?[mdl]:await hordePick();
+    const lab=mdl||(auto.length?'auto: '+auto.join(' / '):'cualquiera disponible');
+    const body={prompt:hordePrompt(b.messages,uN,cN),params:{max_context_length:4096,max_length:300,temperature:0.85,top_p:0.92,rep_pen:1.1,stop_sequence:['\n'+uN+':','\n### ']},models:auto};
+    const H={'Content-Type':'application/json','apikey':hk,'Client-Agent':HCA};
+    const hErr=async r=>{let t='';try{t=await r.text()}catch(e){}let m=t;try{const j=JSON.parse(t);m=j.message||t}catch(e){}return fail(r.status,String(m).slice(0,400))};
+    const r1=await _f0(HB+'/generate/text/async',{method:'POST',headers:H,body:JSON.stringify(body)});
+    if(!r1.ok)return hErr(r1);
+    const id=(await r1.json()).id;if(!id)return fail(502,'AI Horde no devolvió un id de petición.');
+    const t0=Date.now();let st=null;
+    while(Date.now()-t0<(limit||240000)){
+      await wait(2500);
+      const r2=await _f0(HB+'/generate/text/status/'+id,{headers:{'Client-Agent':HCA}});
+      if(!r2.ok)return hErr(r2);
+      st=await r2.json();
+      if(st.faulted){return fail(500,'la generación falló en el worker.')}
+      if(st.is_possible===false){_f0(HB+'/generate/text/status/'+id,{method:'DELETE',headers:{'Client-Agent':HCA}}).catch(()=>{});return fail(503,'ningún worker puede atender esta petición ahora'+(mdl?' con el modelo «'+mdl+'». Prueba otro modelo o déjalo vacío.':'.'))}
+      if(st.done)break;}
+    if(!st||!st.done){_f0(HB+'/generate/text/status/'+id,{method:'DELETE',headers:{'Client-Agent':HCA}}).catch(()=>{});return fail(504,'tiempo de espera agotado. La cola de AI Horde está muy llena.')}
+    const g=(st.generations||[])[0]||{};let txt=String(g.text||'');
+    [uN+':','\n### '].forEach(k=>{const i=txt.indexOf(k.charAt(0)==='\n'?k:'\n'+k);if(i>0)txt=txt.slice(0,i)});
+    txt=txt.trim();
+    if(!txt)return fail(502,'el worker devolvió texto vacío.');
+    if(!b.stream)return new Response(JSON.stringify({choices:[{message:{role:'assistant',content:txt}}]}),{status:200,headers:{'Content-Type':'application/json'}});
+    return new Response('data: '+JSON.stringify({choices:[{delta:{content:txt}}]})+'\n\ndata: [DONE]\n\n',{status:200,headers:{'Content-Type':'text/event-stream'}})}
+  /* Cadena fija: 1º AI Horde -> 2º OpenRouter -> 3º Groq. Pasa a la siguiente si una falla. OpenRouter y Groq solo cuentan si tienen key. */
   window.aiFetch=async function(u,o){
     if(!(typeof u==='string'&&u.indexOf('openrouter.ai/api/v1/chat/completions')>-1))return _f(u,o);
-    const K={venice:($('vnkey').value||'').trim(),or:($('key').value||'').trim(),groq:($('gkey').value||'').trim()};
-    K.infron=($('ifkey').value||'').trim();
-    const first=$('prov').value||'venice',last=$('provl').value||'groq';
-    let ord=[first,...['venice','or','infron','groq'].filter(p=>p!==first&&p!==last)];
-    if(last!=='none'&&last!==first)ord.push(last);
-    ord=ord.filter(p=>K[p]);
-    if(!ord.length)return _f(u,o);
+    const K={or:($('key').value||'').trim(),groq:($('gkey').value||'').trim(),horde:($('hkey').value||'').trim()||'0000000000'};
+    const ord=['horde'];if(K.or)ord.push('or');if(K.groq)ord.push('groq');
     let bad=null;
     for(const p of ord){
       let r=null;
-      try{r=p==='venice'?await viaVenice(o,K.venice):p==='groq'?await viaGroq(o,K.groq,null):p==='infron'?await viaInfron(o,K.infron):await _f(u,o)}
+      try{r=p==='groq'?await viaGroq(o,K.groq,null):p==='horde'?await viaHorde(o,K.horde,ord.length>1?100000:240000):await _f(u,o)}
       catch(e){if(!bad)bad=e;continue}
       if(!r)continue;
       if(r.ok)return r;
       if(!bad)bad=r;
     }
     if(bad instanceof Error)throw bad;
-    return bad||_f(u,o)};
+    return bad||fail(400,'No hay ninguna IA disponible para esta petición.')};
 })();
 
 function renderMenu(){
@@ -1549,7 +1582,7 @@ openChat=(function(o){return function(id){if(!ld('or_chat_'+id,[]).length&&profs
 const bp=mk('👤',()=>profs.length?pickPers():openPanel('prof'),'Cambiar de perfil');bp.className='emo';bp.id='bpers';$('tools').append(bp);
 /* ===== 6. CALIDAD DE IA ===== */
 const MQ={fast:'nvidia/nemotron-3.5-lightning:free',best:'nvidia/nemotron-3-ultra-550b-a55b:free'};
-const adv=['model','vmodel','gmodel','vnmodel','ifurl','ifmodel','fmodel','fproxy'].map($);
+const adv=['model','vmodel','gmodel','hmodel','fmodel','fproxy'].map($);
 const bx=document.createElement('div');bx.style.display='grid';bx.style.gap='9px';
 bx.innerHTML='<label>Calidad de la IA (modelos de OpenRouter)</label><div class="seg" id="qual"><button type="button" data-g="fast">⚡ Rápido</button><button type="button" data-g="best">✨ Mejor calidad</button></div><button id="advb" type="button">Opciones avanzadas ▾</button>';
 $('set').prepend(bx);
@@ -1559,16 +1592,6 @@ const showAdv=s=>adv.forEach(e=>e.classList.toggle('advh',!s));showAdv(custom);
 $('advb').onclick=()=>showAdv(adv[0].classList.contains('advh'));
 document.querySelectorAll('#qual button').forEach(b=>b.onclick=()=>{setSeg('qual',b.dataset.g);$('model').value=MQ[b.dataset.g];try{localStorage.setItem('or_model2',MQ[b.dataset.g])}catch(e){}});
 $('back').addEventListener('click',()=>{$('qr').classList.add('hide');renderMenu()});
-
-/* ===== Venice: lista de modelos y proveedor por defecto ===== */
-(function(){
-  const dl=document.createElement('datalist');dl.id='vnms';dl.innerHTML='<option value="venice-uncensored-1-2">';document.body.append(dl);$('vnmodel').setAttribute('list','vnms');
-  async function vnModels(){const k=$('vnkey').value.trim();if(!k)return;
-    try{const r=await fetch('https://api.venice.ai/api/v1/models?type=text',{headers:{Authorization:'Bearer '+k}});if(!r.ok)return;
-      const j=await r.json();dl.innerHTML='<option value="venice-uncensored-1-2">';(j.data||[]).forEach(m=>{const o=document.createElement('option');o.value=m.id;dl.append(o)})}catch(e){}}
-  $('vnkey').addEventListener('change',vnModels);vnModels();
-  
-})();
 })();
 
 </script>

@@ -55,6 +55,16 @@ button.p,.chip.active,.seg button.on,.avc i,.u,#send:after{color:#fff!important}
 #persl{display:grid;gap:8px}#persl button{display:flex;align-items:center;gap:10px;text-align:left;padding:10px}#persl button.on{border-color:#8b5cf6;background:#8b5cf622}#persl img,#persl .pa{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#2a2140;display:grid;place-items:center}
 .advh{display:none!important}
 
+
+/* ===== fixes Android / ajustes con scroll / modo avanzado ===== */
+button,.chip,.card,.seg button,label,summary{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#set{flex:0 1 auto;max-height:68%;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:22px}
+#box,#box2,#wzb,#persb,#comBox{-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+#box textarea,#wzb textarea{min-height:64px}
+.wzmode{font-size:12px;color:#c9c2dd;margin:-2px 0 0}
+#wzcnt,#ecnt{font-size:12px;color:#a5a5a5;text-align:right}
+#eprevsys{width:100%;font-size:12px;opacity:.9}
+.advbox{display:grid;gap:9px}
 </style>
 </head>
 <body>
@@ -123,8 +133,8 @@ button.p,.chip.active,.seg button.on,.avc i,.u,#send:after{color:#fff!important}
   <div class="r"><div style="width:70px"><label>Icono</label><input id="eemo" maxlength="4"></div><div style="flex:1;min-width:160px"><label>Nombre</label><input id="enom"></div></div>
   <label>Descripción corta</label><input id="edes">
   <label>Primer mensaje (escribe [Player] para poner el nombre del usuario)</label><textarea id="eint" rows="3"></textarea>
-  <label>Personalidad / prompt del personaje</label><textarea id="epro" rows="8"></textarea>
-  <details><summary>Avanzado</summary><input id="eimg" placeholder="URL de imagen: https://..."><label>Voz de Fish Audio (ID o enlace fish.audio/m/…)</label><input id="evoice" placeholder="vacío = voz por defecto"></details>
+  <label>Personalidad / prompt del personaje</label><textarea id="epro" rows="12"></textarea><div id="ecnt"></div>
+  <details><summary>Avanzado</summary><label class="chk"><input type="checkbox" id="enoauto"> Prompt puro: no añadir género ni datos del perfil del usuario automáticamente</label><button type="button" id="eprev2">👁 Ver lo que recibe la IA</button><textarea id="eprevsys" rows="10" readonly class="hide"></textarea><input id="eimg" placeholder="URL de imagen: https://..."><label>Voz de Fish Audio (ID o enlace fish.audio/m/…)</label><input id="evoice" placeholder="vacío = voz por defecto"></details>
   <div class="r">
     <button class="p" id="osave" type="button">Guardar</button>
     <button id="ocancel" type="button">Cancelar</button>
@@ -141,13 +151,26 @@ button.p,.chip.active,.seg button.on,.avc i,.u,#send:after{color:#fff!important}
  <div class="wzs"><i></i><i></i><i></i><i></i></div>
  <div class="wzst" data-s="0"><div class="avp"><label for="wzf" class="avc"><span>📷</span><img id="wzi" alt="" style="display:none"><i>＋</i></label><input id="wzf" type="file" accept="image/*" hidden></div>
   <label>Nombre</label><input id="wzn" maxlength="40" placeholder="Ej: Luna, la bruja del bosque">
-  <label>Género</label><div class="seg" id="wzg"><button type="button" data-g="f">♀ Mujer</button><button type="button" data-g="m">♂ Hombre</button><button type="button" data-g="n">⚧ No binario</button></div></div>
+  <label>Género</label><div class="seg" id="wzg" data-own><button type="button" data-g="f">♀ Mujer</button><button type="button" data-g="m">♂ Hombre</button><button type="button" data-g="n">⚧ No binario</button></div>
+  <label>Modo de creación</label><div class="seg" id="wzm" data-own><button type="button" data-g="0" class="on">✨ Simple</button><button type="button" data-g="1">🛠 Avanzado</button></div>
+  <div class="wzmode" id="wzmd">Simple: describes personalidad y escenario y la app arma el prompt.</div></div>
  <div class="wzst hide" data-s="1"><label>Frase corta (tagline)</label><input id="wzd" maxlength="90" placeholder="Misteriosa, sarcástica y leal">
   <label>Saludo inicial (usa [Player] para el nombre del usuario)</label><textarea id="wzh" rows="4" placeholder="*Te mira desde la ventana y sonríe.* Llegas tarde…"></textarea></div>
- <div class="wzst hide" data-s="2"><label>Personalidad</label><textarea id="wzp" rows="5" placeholder="Cómo es, cómo habla, qué le gusta, sus manías…"></textarea>
+ <div class="wzst hide sim" data-s="2"><label>Personalidad</label><textarea id="wzp" rows="5" placeholder="Cómo es, cómo habla, qué le gusta, sus manías…"></textarea>
   <label>Escenario</label><textarea id="wzc" rows="4" placeholder="Dónde están y qué está pasando al empezar"></textarea></div>
+ <div class="wzst hide adv" data-s="2"><div class="advbox">
+  <label>Prompt completo del personaje (es exactamente lo que recibe la IA como sistema)</label>
+  <textarea id="wzsys" rows="10" placeholder="Eres …, un personaje ADULTO (18+) de roleplay. Personalidad, forma de hablar, historia, reglas, formato de respuesta…"></textarea>
+  <div class="r"><button type="button" id="wzgen">✨ Generar plantilla</button></div>
+  <label>Ejemplos de diálogo (opcional)</label>
+  <textarea id="wzex" rows="4" placeholder="[Player]: Hola&#10;Personaje: *sonríe* Ya era hora…"></textarea>
+  <label>Instrucciones finales (opcional; se añaden al final y la IA les da más peso)</label>
+  <textarea id="wzfin" rows="3" placeholder="Ej: Responde en 2 párrafos. Nunca hables por el usuario."></textarea>
+  <label class="chk"><input type="checkbox" id="wzraw"> Prompt puro: no añadir género ni datos del perfil del usuario automáticamente</label>
+  <div id="wzcnt"></div>
+ </div></div>
  <div class="wzst hide" data-s="3"><label>Tags (separados por coma)</label><input id="wzt2" placeholder="Anime, Fantasía, Romance">
-  <label>Visibilidad</label><div class="seg" id="wzv"><button type="button" data-g="0" class="on">🔒 Privado</button><button type="button" data-g="1">🌍 Público</button></div>
+  <label>Visibilidad</label><div class="seg" id="wzv" data-own><button type="button" data-g="0" class="on">🔒 Privado</button><button type="button" data-g="1">🌍 Público</button></div>
   <label class="chk"><input type="checkbox" id="wza"> Confirmo que es un personaje ficticio y ADULTO (18+)</label></div>
  <div class="r wzf"><button id="wzback" type="button">Atrás</button><button id="wznext" class="p" type="button">Siguiente</button></div>
 </div></div>
@@ -447,16 +470,20 @@ $('cedit').onclick=()=>cur&&cur.group?openPanel('grp',cur.gr):openEdit(cur);
 function openEdit(c){
   editing=c;setSeg('egen',c?c.gender||'':'');$('otitle').textContent=c?'Editar personaje':'Nuevo personaje';
   $('eemo').value=c?c.emoji:'🎭';$('enom').value=c?c.name:'';$('edes').value=c?c.desc:'';$('eimg').value=c?c.image||'':'';updPrev();
-  $('eint').value=c?c.intro||'':'';$('evoice').value=c?c.voice||'':'';
+  $('eint').value=c?c.intro||'':'';$('enoauto').checked=!!(c&&c.noAuto);$('eprevsys').classList.add('hide');$('evoice').value=c?c.voice||'':'';
   $('epro').value=c?c.prompt:'Eres [nombre], un personaje ADULTO (18+ años) de roleplay con esta personalidad: ... Escenario: ... Estilo: ... Solo adultos: nunca incluyas contenido sexual con menores de edad o personajes que lo sean.'+R;
   $('oreset').classList.toggle('hide',!(c&&DEF.some(d=>d.id===c.id)));
   $('odel').classList.toggle('hide',!(c&&c.custom));
   $('ov').classList.remove('hide');
 }
 $('ocancel').onclick=()=>$('ov').classList.add('hide');
+$('epro').addEventListener('input',()=>{const n=$('epro').value.length;$('ecnt').textContent=n+' caracteres'+(n>6000?' (máx. 6000 para publicar)':'');$('ecnt').style.color=n>6000?'#ff7474':'#a5a5a5'});
+$('eprev2').onclick=()=>{const t=$('eprevsys');if(!t.classList.contains('hide')){t.classList.add('hide');return}
+  const tmp={name:$('enom').value.trim()||'Personaje',gender:getSeg('egen'),prompt:$('epro').value,noAuto:$('enoauto').checked};
+  t.value=sysPrompt(tmp,true);t.classList.remove('hide')};
 $('osave').onclick=()=>{
   const name=$('enom').value.trim();if(!name){alert('Ponle un nombre.');return}
-  const v={gender:getSeg('egen'),emoji:$('eemo').value.trim()||'🎭',name,desc:$('edes').value.trim(),image:$('eimg').value.trim(),intro:$('eint').value.trim(),prompt:$('epro').value.trim(),voice:(($('evoice').value.match(/[0-9a-f]{32}/i)||[''])[0]).toLowerCase()};
+  const v={gender:getSeg('egen'),emoji:$('eemo').value.trim()||'🎭',name,desc:$('edes').value.trim(),image:$('eimg').value.trim(),intro:$('eint').value.trim(),prompt:$('epro').value.trim(),noAuto:$('enoauto').checked,voice:(($('evoice').value.match(/[0-9a-f]{32}/i)||[''])[0]).toLowerCase()};
   if(editing)Object.assign(editing,v);else chars.push({id:'c'+Date.now(),custom:true,...v});
   sv('or_chars_v2',chars);touch();$('ov').classList.add('hide');renderMenu();
   if(cur&&editing&&cur.id===editing.id){$('ctitle').textContent=cur.name;$('chatavatar').src=cur.image||'';$('chatavatar').style.visibility=cur.image?'visible':'hidden';log.style.setProperty('--chat-wallpaper',cur.image?`url(\"${cur.image}\")`:'none');}
@@ -530,8 +557,8 @@ renderMenu();
 const GT={m:'hombre',f:'mujer',n:'persona no binaria (usa lenguaje neutro)'};
 function setSeg(id,g){document.querySelectorAll('#'+id+' button').forEach(b=>b.classList.toggle('on',b.dataset.g===g))}
 function getSeg(id){const b=document.querySelector('#'+id+' button.on');return b?b.dataset.g:''}
-document.querySelectorAll('.seg').forEach(sg=>sg.onclick=e=>{const b=e.target.closest('button');if(!b)return;const on=b.classList.contains('on');sg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));if(!on)b.classList.add('on')});
-const cg=c=>c&&GT[c.gender]?'\n\nGÉNERO: '+c.name+' es '+GT[c.gender]+'. Mantenlo siempre en tu forma de hablar y actuar.':'';
+document.querySelectorAll('.seg:not([data-own])').forEach(sg=>sg.onclick=e=>{const b=e.target.closest('button');if(!b)return;const on=b.classList.contains('on');sg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));if(!on)b.classList.add('on')});
+const cg=c=>c&&!c.noAuto&&GT[c.gender]?'\n\nGÉNERO: '+c.name+' es '+GT[c.gender]+'. Mantenlo siempre en tu forma de hablar y actuar.':'';
 function updPrev(){const v=$('eimg').value.trim(),p=$('eprev');if(v){p.src=v;p.style.display='block';p.previousElementSibling.style.display='none'}else{p.removeAttribute('src');p.style.display='none';p.previousElementSibling.style.display=''}$('eclr').style.display=v?'inline-block':'none'}
 $('eimg').addEventListener('input',updPrev);
 $('eclr').onclick=()=>{$('eimg').value='';$('efile').value='';updPrev()};
@@ -957,10 +984,10 @@ async function runGRound(R){
 
 /* ===== REPETIR / SALTAR TURNO / NOMBRE DEL USUARIO ===== */
 function updPh(){inp.placeholder=profs.length?'Mensaje '+curProf().name:'Escribe tu acción o diálogo…'}
-function sysPrompt(){
-  let b=pl(cur.prompt)+cg(cur);
-  if(profs.length){const me=curProf();b+='\n\nEl usuario interpreta a '+me.name+(GT[me.gender]||me.desc?' ('+[GT[me.gender],me.desc].filter(Boolean).join(', ')+')':'')+'. Llámalo por ese nombre cuando corresponda y no hables ni decidas por él. Todo es ficticio y entre adultos (18+).'}
-  return b+memBlock(memGet().text)}
+function sysPrompt(c,noMem){
+  c=c||cur;let b=pl(c.prompt)+cg(c);
+  if(profs.length&&!c.noAuto){const me=curProf();b+='\n\nEl usuario interpreta a '+me.name+(GT[me.gender]||me.desc?' ('+[GT[me.gender],me.desc].filter(Boolean).join(', ')+')':'')+'. Llámalo por ese nombre cuando corresponda y no hables ni decidas por él. Todo es ficticio y entre adultos (18+).'}
+  return b+(noMem?'':memBlock(memGet().text))}
 function setTools(b){$('regen').disabled=b;$('skip').disabled=b}
 async function genAI(){
   if(!anyKey()){err('Falta la API key. Vuelve al menú y ábrela en ⚙ Ajustes.');return false}
@@ -1430,17 +1457,17 @@ $('dq').oninput=e=>{q=e.target.value.trim().toLowerCase();renderMenu()};
 chips();renderMenu();
 
 /* ===== 2. CREADOR POR PASOS ===== */
-const W={s:0,img:'',g:''};
+const W={s:0,img:'',g:'',adv:false};
 const wzTags=()=>$('wzt2').value.split(',').map(x=>cap(x.trim())).filter(Boolean).slice(0,6);
 function wzPrev(){const p=$('wzprev');p.innerHTML='';const i=document.createElement('div');i.className='pi';
   if(W.img)i.style.backgroundImage=`url("${W.img}")`;else i.textContent='🎭';
   const t=document.createElement('div'),b=document.createElement('b'),sp=document.createElement('span'),tg=document.createElement('div');tg.className='tg';
   b.textContent=$('wzn').value||'Nombre';sp.textContent=$('wzd').value||'Tu frase corta aparecerá aquí';wzTags().slice(0,3).forEach(x=>{const e=document.createElement('i');e.textContent=x;tg.append(e)});
   t.append(b,sp,tg);p.append(i,t)}
-function wzShow(){document.querySelectorAll('.wzst').forEach(e=>e.classList.toggle('hide',+e.dataset.s!==W.s));
+function wzShow(){document.querySelectorAll('.wzst').forEach(e=>e.classList.toggle('hide',+e.dataset.s!==W.s||(e.classList.contains('sim')&&W.adv)||(e.classList.contains('adv')&&!W.adv)));wzCnt();
   document.querySelectorAll('.wzs i').forEach((e,k)=>e.classList.toggle('on',k<=W.s));
   $('wzback').style.visibility=W.s?'visible':'hidden';$('wznext').textContent=W.s===3?($('wzv').querySelector('.on').dataset.g==='1'?'Crear y publicar':'Crear'):'Siguiente';wzPrev()}
-function wzOpen(){W.s=0;W.img='';W.g='';['wzn','wzd','wzh','wzp','wzc','wzt2'].forEach(i=>$(i).value='');$('wza').checked=false;
+function wzOpen(){W.s=0;W.img='';W.g='';W.adv=false;['wzn','wzd','wzh','wzp','wzc','wzt2','wzsys','wzex','wzfin'].forEach(i=>$(i).value='');$('wza').checked=false;$('wzraw').checked=false;wzMode(false);
   $('wzi').style.display='none';$('wzi').previousElementSibling.style.display='';setSeg('wzg','');
   $('wzv').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.g==='0'));$('wz').classList.remove('hide');wzShow()}
 openEdit=(function(o){return function(c){c?o(c):wzOpen()}})(openEdit);
@@ -1449,15 +1476,27 @@ $('wzf').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;i
 ['wzn','wzd','wzt2'].forEach(i=>$(i).addEventListener('input',wzPrev));
 document.querySelectorAll('#wzg button').forEach(b=>b.addEventListener('click',()=>{setSeg('wzg',b.dataset.g)}));
 document.querySelectorAll('#wzv button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#wzv button').forEach(x=>x.classList.toggle('on',x===b));wzShow()}));
+function wzMode(a){W.adv=a;document.querySelectorAll('#wzm button').forEach(x=>x.classList.toggle('on',(x.dataset.g==='1')===a));
+  $('wzmd').textContent=a?'Avanzado: escribes tú el prompt completo, ejemplos e instrucciones finales.':'Simple: describes personalidad y escenario y la app arma el prompt.'}
+document.querySelectorAll('#wzm button').forEach(b=>b.addEventListener('click',()=>{wzMode(b.dataset.g==='1');wzShow()}));
+function wzAdvPrompt(){const sy=$('wzsys').value.trim(),ex=$('wzex').value.trim(),fi=$('wzfin').value.trim();
+  return sy+(ex?'\n\nEJEMPLOS DE DIÁLOGO:\n'+ex:'')+(fi?'\n\nINSTRUCCIONES FINALES:\n'+fi:'')}
+function wzCnt(){const n=W.adv?wzAdvPrompt().length:0;$('wzcnt').textContent=W.adv?n+' / 6000 caracteres':'';$('wzcnt').style.color=n>6000?'#ff7474':'#a5a5a5'}
+['wzsys','wzex','wzfin'].forEach(i=>$(i).addEventListener('input',wzCnt));
+$('wzgen').onclick=()=>{const t=$('wzsys');if(t.value.trim()&&!confirm('¿Reemplazar el prompt actual por la plantilla?'))return;
+  const n=$('wzn').value.trim()||'[nombre]';
+  t.value='Eres '+n+', un personaje ADULTO (18+ años) de roleplay.\n\nPERSONALIDAD: ...\nAPARIENCIA: ...\nFORMA DE HABLAR: ...\nHISTORIA / CONTEXTO: ...\nESCENARIO INICIAL: ...\n\nREGLAS: nunca hables ni decidas por el usuario, no rompas la ficción, avanza la escena. Solo adultos: nunca incluyas contenido sexual con menores de edad.'+R;wzCnt()};
 $('wzback').onclick=()=>{if(W.s>0){W.s--;wzShow()}};
 $('wznext').onclick=async()=>{
-  const need=[[0,'wzn','Ponle un nombre.'],[1,'wzh','Escribe el saludo inicial.'],[2,'wzp','Describe su personalidad.']].find(x=>x[0]===W.s);
+  const need=[[0,'wzn','Ponle un nombre.'],[1,'wzh','Escribe el saludo inicial.'],[2,W.adv?'wzsys':'wzp',W.adv?'Escribe el prompt del personaje.':'Describe su personalidad.']].find(x=>x[0]===W.s);
   if(need&&!$(need[1]).value.trim()){alert(need[2]);return}
   if(W.s<3){W.s++;wzShow();return}
   if(!$('wza').checked){alert('Confirma que el personaje es ficticio y adulto (18+).');return}
   const n=$('wzn').value.trim(),pub_=$('wzv').querySelector('.on').dataset.g==='1';
-  const prompt='Eres '+n+', un personaje ADULTO (18+ años) de roleplay.\nPersonalidad: '+$('wzp').value.trim()+'\nEscenario: '+($('wzc').value.trim()||'libre, lo define la conversación')+'\nEstilo: inmersivo, en español. Solo adultos: nunca incluyas contenido sexual con menores de edad.';
+  const prompt=W.adv?wzAdvPrompt():'Eres '+n+', un personaje ADULTO (18+ años) de roleplay.\nPersonalidad: '+$('wzp').value.trim()+'\nEscenario: '+($('wzc').value.trim()||'libre, lo define la conversación')+'\nEstilo: inmersivo, en español. Solo adultos: nunca incluyas contenido sexual con menores de edad.';
   const c={id:'c'+Date.now(),custom:true,gender:getSeg('wzg'),emoji:'🎭',name:n,desc:$('wzd').value.trim(),image:W.img,intro:$('wzh').value.trim(),prompt,voice:'',tags:wzTags()};
+  if(W.adv)c.noAuto=$('wzraw').checked;
+  if(prompt.length>6000&&pub_){alert('El prompt supera 6000 caracteres: acórtalo para poder publicarlo.');return}
   chars.push(c);sv('or_chars_v2',chars);touch();$('wz').classList.add('hide');renderMenu();
   const u=await toStorage(c.image);if(u){c.image=u;sv('or_chars_v2',chars);touch();renderMenu()}
   if(pub_){editing=c;$('opub').click()}};

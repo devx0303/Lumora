@@ -81,18 +81,18 @@ button,.chip,.card,.seg button,label,summary{touch-action:manipulation;-webkit-t
 <div class="view" id="menu">
   <div class="top"><h1 style="display:flex;align-items:center;gap:8px"><img data-logo alt="" style="width:34px;height:34px"> Lumora</h1><button id="broom" type="button">🌐 Salas</button><button id="fs" type="button" title="Pantalla completa" aria-label="Pantalla completa">⛶</button><button id="gear" type="button">⚙ Ajustes</button></div>
   <div id="set" class="hide">
-    <label>Orden de las IAs: 1º AI Horde (gratis), 2º OpenRouter, 3º Groq. Se usa la primera que responda; si falla, pasa a la siguiente (OpenRouter y Groq solo cuentan si tienen API key).</label>
-    <label>1º · AI Horde (gratis y sin filtros, con cola de espera · sin registro funciona con la key 0000000000)</label>
+    <label>Orden de las IAs: en chats normales se usa OpenRouter y, si falla, Groq. Si el chat es +18 (se detecta solo: por las palabras de la conversación o porque OpenRouter/Groq se niegan a responder), se usa primero AI Horde con el modelo Gemma heretic y, si falla, OpenRouter y luego Groq. OpenRouter y Groq solo cuentan si tienen API key; AI Horde también sirve de último recurso.</label>
+    <label>AI Horde · primera opción en chats +18 (gratis y sin filtros, con cola de espera · sin registro funciona con la key 0000000000)</label>
     <input id="hkey" type="password" placeholder="API key de AI Horde (vacío = anónima 0000000000)" autocomplete="off" aria-label="API key de AI Horde">
-    <input id="hmodel" list="hms" placeholder="Modelo de AI Horde (vacío = automático: elige el mejor roleplay disponible)" autocomplete="off" aria-label="Modelo de AI Horde"><datalist id="hms"></datalist>
+    <input id="hmodel" list="hms" placeholder="Modelo de AI Horde (vacío = automático: Gemma heretic si está disponible; si no, el mejor roleplay)" autocomplete="off" aria-label="Modelo de AI Horde"><datalist id="hms"></datalist>
     <div class="r"><button id="hlist" type="button">🔄 Ver modelos de AI Horde disponibles</button></div>
     <div id="hmsg" style="font-size:12px;color:#c4b5fd"></div>
-    <label>2º · OpenRouter</label>
+    <label>OpenRouter · primera opción en chats normales</label>
     <input id="key" type="password" placeholder="API key de OpenRouter (sk-or-...)" autocomplete="off" aria-label="API key">
     <input id="model" list="ms" aria-label="Modelo">
     <input id="vmodel" list="vms" placeholder="Modelo de visión para fotos (vacío = Gemma 4 26B gratis, con respaldo automático)" aria-label="Modelo de visión"><datalist id="vms"><option value="google/gemma-4-26b-a4b-it:free"><option value="google/gemma-4-31b-it:free"><option value="nvidia/nemotron-3.5-super-vl:free"><option value="qwen/qwen3.8-27b:free"><option value="nvidia/nemotron-3-super-120b-a12b:free"><option value="openrouter/free"></datalist>
     <datalist id="ms"><option value="nvidia/nemotron-3.5-lightning:free"><option value="dots-studio/dots-3-note-preview:free"><option value="nvidia/nemotron-3-ultra-550b-a55b:free"><option value="google/gemma-4-31b-it:free"><option value="xingchen-agi/xing4.0-29b-a4b:free"><option value="openrouter/free"></datalist>
-    <label>3º · Groq (última opción)</label>
+    <label>Groq · segunda opción en chats normales</label>
     <input id="gkey" type="password" placeholder="API key de Groq (gsk_...)" autocomplete="off" aria-label="API key de Groq">
     <input id="gmodel" list="gms" placeholder="Modelo de Groq (por defecto: qwen/qwen3.8-27b)" aria-label="Modelo de Groq"><datalist id="gms"><option value="qwen/qwen3.8-27b"><option value="llama-3.3-70b-versatile"><option value="llama-3.1-8b-instant"><option value="openai/gpt-oss-120b"><option value="qwen/qwen3-32b"><option value="meta-llama/llama-4-scout-17b-16e-instruct"></datalist>
     <label><input type="checkbox" id="remember"> Recordar key en este navegador</label>
@@ -370,79 +370,166 @@ function anyKey(){return $('hkey').value.trim()||$('key').value.trim()||$('gkey'
       const j=await r.json();j.sort((a,b)=>(b.count||0)-(a.count||0));
       $('hms').innerHTML=j.slice(0,60).map(x=>'<option value="'+String(x.name).replace(/"/g,'')+'">').join('');
       const pk=await hordePick(true);
-      m.textContent=(pk.length?'En automático usaría: '+pk.join(' / ')+'. ':'')+j.length+' modelos con workers activos. Toca el campo "Modelo" para elegir (los primeros tienen más workers = menos espera). Top: '+j.slice(0,3).map(x=>x.name+' ('+(x.count||0)+')').join(', ')}
+      m.textContent=(pk.h.length?'Gemma heretic disponible: '+pk.h[0]+'. ':'Gemma heretic no está disponible ahora; en automático usaría: '+(pk.v.join(' / ')||'cualquiera')+'. ')+j.length+' modelos con workers activos. Toca el campo "Modelo" para elegir (los primeros tienen más workers = menos espera). Top: '+j.slice(0,3).map(x=>x.name+' ('+(x.count||0)+')').join(', ')}
     catch(e){m.textContent='No se pudo consultar: '+e.message}};
 
   let hPickC=null;
-  /* Elige solo los mejores modelos de roleplay SIN filtros que tengan workers activos ahora (la lista de la Horde cambia por horas) */
+  /* Devuelve {h: modelos Gemma heretic con workers ahora, v: los 3 mejores modelos de roleplay sin filtros con workers ahora} (la lista de la Horde cambia por horas) */
   async function hordePick(force){
-    if(!force&&hPickC&&Date.now()-hPickC.t<300000)return hPickC.v;
-    let v=[];
+    if(!force&&hPickC&&Date.now()-hPickC.t<300000)return hPickC;
+    let v=[],h=[];
     try{
       const r=await _f0(HB+'/status/models?type=text',{headers:{'Client-Agent':HCA}});
       if(r.ok){
-        let ms=(await r.json()).filter(m=>m&&m.name&&(m.count||0)>0);
+        const all=(await r.json()).filter(m=>m&&m.name&&(m.count||0)>0);
+        h=all.filter(m=>/gemma.*heretic/i.test(m.name)).sort((a,b)=>(b.count||0)-(a.count||0)).map(m=>m.name);
+        let ms=all.slice();
         const fast=ms.filter(m=>m.eta==null||m.eta<=600);if(fast.length)ms=fast;
         const tiny=/(^|[^a-z0-9])(0?\.?5|1|2|3|4)b(?![a-z0-9])|e[24]b|tinyllama/i;
-        const T=[/gemma-4-31b.*heretic/i,/wicked-tutu/i,/skyfall/i,/angelic.?eclipse/i];
+        const T=[/gemma.*heretic/i,/wicked-tutu/i,/skyfall/i,/angelic.?eclipse/i];
         const gen=/heretic|abliterat|uncensor|hauhau|fimbulvetr|magnum|euryale|cydonia|anubis|mag-mell|tutu|eclipse|roleplay/i;
         const score=m=>{const n=m.name;for(let i=0;i<T.length;i++)if(T[i].test(n))return i;
           if(gen.test(n)&&!tiny.test(n))return 10;if(gen.test(n))return 20;if(!tiny.test(n))return 30;return 40};
         ms.sort((a,b)=>score(a)-score(b)||(b.count||0)-(a.count||0));
         v=ms.slice(0,3).map(m=>m.name)}
     }catch(e){}
-    hPickC={t:Date.now(),v};return v}
+    hPickC={t:Date.now(),v,h};return hPickC}
   function hordePrompt(msgs,uN,cN){
     const sys=msgs.filter(m=>m.role==='system').map(m=>String(m.content||'')).join('\n\n').slice(0,6000);
     const rest=msgs.filter(m=>m.role!=='system'),lines=[];let budget=6000;
     for(let i=rest.length-1;i>=0;i--){const m=rest[i],t=(typeof m.content==='string'?m.content:'').trim();
       const l=(m.role==='user'?uN:cN)+': '+t;if(budget-l.length<0&&lines.length>=2)break;budget-=l.length;lines.unshift(l)}
     return (sys?sys+'\n\n':'')+'### Roleplay (continúa la conversación como '+cN+')\n'+lines.join('\n')+'\n'+cN+':'}
+  /* Envía una petición a la Horde y espera el resultado. Devuelve {st} si salió bien, o {err, impossible?, timeout?} */
+  async function hordeJob(body,H,limit){
+    const hErr=async r=>{let t='';try{t=await r.text()}catch(e){}let m=t;try{const j=JSON.parse(t);m=j.message||t}catch(e){}return fail(r.status,String(m).slice(0,400))};
+    const r1=await _f0(HB+'/generate/text/async',{method:'POST',headers:H,body:JSON.stringify(body)});
+    if(!r1.ok)return {err:await hErr(r1)};
+    const id=(await r1.json()).id;if(!id)return {err:fail(502,'AI Horde no devolvió un id de petición.')};
+    const del=()=>{_f0(HB+'/generate/text/status/'+id,{method:'DELETE',headers:{'Client-Agent':HCA}}).catch(()=>{})};
+    const t0=Date.now();let st=null;
+    while(Date.now()-t0<limit){
+      await wait(2500);
+      const r2=await _f0(HB+'/generate/text/status/'+id,{headers:{'Client-Agent':HCA}});
+      if(!r2.ok)return {err:await hErr(r2)};
+      st=await r2.json();
+      if(st.faulted)return {err:fail(500,'la generación falló en el worker.')};
+      if(st.is_possible===false){del();return {err:fail(503,'ningún worker puede atender esta petición ahora.'),impossible:true}}
+      if(st.done)break}
+    if(!st||!st.done){del();return {err:fail(504,'tiempo de espera agotado. La cola de AI Horde está muy llena.'),timeout:true}}
+    return {st}}
   async function viaHorde(o,hk,limit){
     const b=JSON.parse(o.body);
     if(JSON.stringify(b.messages).indexOf('image_url')>-1)return null;
-    const uN=(typeof profs!=='undefined'&&profs.length&&curProf().name)||'Usuario',cN=(typeof cur!=='undefined'&&cur&&cur.name)||'Personaje';
+    const sysT=b.messages.filter(m=>m.role==='system').map(m=>String(m.content||'')).join('\n');
+    const gm=/Tú eres SOLO ([^:\n]+?):/.exec(sysT),inRoom=typeof room!=='undefined'&&!!room;
+    const uN=inRoom?'Jugadores':((typeof profs!=='undefined'&&profs.length&&curProf().name)||'Usuario');
+    const cN=gm?gm[1].trim():((inRoom&&room.ch&&room.ch.name)||(typeof cur!=='undefined'&&cur&&cur.name)||'Personaje');
     const mdl=($('hmodel').value||'').trim();
-    const auto=mdl?[mdl]:await hordePick();
-    const lab=mdl||(auto.length?'auto: '+auto.join(' / '):'cualquiera disponible');
-    const body={prompt:hordePrompt(b.messages,uN,cN),params:{max_context_length:4096,max_length:300,temperature:0.85,top_p:0.92,rep_pen:1.1,stop_sequence:['\n'+uN+':','\n### ']},models:auto};
+    const pk=mdl?null:await hordePick();
+    /* Con modelo elegido: solo ese. Automático: primero Gemma heretic; si no hay workers de ese modelo, la lista de mejores roleplay */
+    const rest=pk?pk.v.filter(n=>!pk.h.includes(n)):[];
+    const plans=mdl?[[mdl]]:(pk.h.length?(rest.length?[pk.h,rest]:[pk.h]):[pk.v]);
+    const stop=['\n'+uN+':','\n### '];if(inRoom)stop.push('\n[');
+    const base={prompt:hordePrompt(b.messages,uN,cN),params:{max_context_length:4096,max_length:300,temperature:0.85,top_p:0.92,rep_pen:1.1,stop_sequence:stop}};
     const H={'Content-Type':'application/json','apikey':hk,'Client-Agent':HCA};
-    const hErr=async r=>{let t='';try{t=await r.text()}catch(e){}let m=t;try{const j=JSON.parse(t);m=j.message||t}catch(e){}return fail(r.status,String(m).slice(0,400))};
-    const r1=await _f0(HB+'/generate/text/async',{method:'POST',headers:H,body:JSON.stringify(body)});
-    if(!r1.ok)return hErr(r1);
-    const id=(await r1.json()).id;if(!id)return fail(502,'AI Horde no devolvió un id de petición.');
-    const t0=Date.now();let st=null;
-    while(Date.now()-t0<(limit||240000)){
-      await wait(2500);
-      const r2=await _f0(HB+'/generate/text/status/'+id,{headers:{'Client-Agent':HCA}});
-      if(!r2.ok)return hErr(r2);
-      st=await r2.json();
-      if(st.faulted){return fail(500,'la generación falló en el worker.')}
-      if(st.is_possible===false){_f0(HB+'/generate/text/status/'+id,{method:'DELETE',headers:{'Client-Agent':HCA}}).catch(()=>{});return fail(503,'ningún worker puede atender esta petición ahora'+(mdl?' con el modelo «'+mdl+'». Prueba otro modelo o déjalo vacío.':'.'))}
-      if(st.done)break;}
-    if(!st||!st.done){_f0(HB+'/generate/text/status/'+id,{method:'DELETE',headers:{'Client-Agent':HCA}}).catch(()=>{});return fail(504,'tiempo de espera agotado. La cola de AI Horde está muy llena.')}
-    const g=(st.generations||[])[0]||{};let txt=String(g.text||'');
-    [uN+':','\n### '].forEach(k=>{const i=txt.indexOf(k.charAt(0)==='\n'?k:'\n'+k);if(i>0)txt=txt.slice(0,i)});
-    txt=txt.trim();
-    if(!txt)return fail(502,'el worker devolvió texto vacío.');
-    if(!b.stream)return new Response(JSON.stringify({choices:[{message:{role:'assistant',content:txt}}]}),{status:200,headers:{'Content-Type':'application/json'}});
-    return new Response('data: '+JSON.stringify({choices:[{delta:{content:txt}}]})+'\n\ndata: [DONE]\n\n',{status:200,headers:{'Content-Type':'text/event-stream'}})}
-  /* Cadena fija: 1º AI Horde -> 2º OpenRouter -> 3º Groq. Pasa a la siguiente si una falla. OpenRouter y Groq solo cuentan si tienen key. */
+    let last=null;
+    for(const models of plans){
+      const res=await hordeJob({...base,models},H,limit||240000);
+      if(res.st){
+        const g=(res.st.generations||[])[0]||{};let txt=String(g.text||'');
+        [uN+':','\n### '].forEach(k=>{const i=txt.indexOf(k.charAt(0)==='\n'?k:'\n'+k);if(i>0)txt=txt.slice(0,i)});
+        if(inRoom){const i=txt.indexOf('\n[');if(i>0)txt=txt.slice(0,i)}
+        txt=txt.trim();
+        if(!txt)return fail(502,'el worker devolvió texto vacío.');
+        if(!b.stream)return new Response(JSON.stringify({choices:[{message:{role:'assistant',content:txt}}]}),{status:200,headers:{'Content-Type':'application/json'}});
+        return new Response('data: '+JSON.stringify({choices:[{delta:{content:txt}}]})+'\n\ndata: [DONE]\n\n',{status:200,headers:{'Content-Type':'text/event-stream'}})}
+      last=res.err;
+      if(!res.impossible)break}   /* error o cola llena: no probar otros modelos de Horde, pasa a la siguiente IA */
+    return last}
+  /* ===== Detección de chats +18 =====
+     1) Palabras explícitas en los últimos mensajes (lo que ya se dijo + el mensaje que se va a enviar; no el prompt del personaje).
+     2) Si OpenRouter o Groq se niegan a responder (texto de rechazo o error de moderación), el chat se marca como +18 y pasa a AI Horde.
+     3) Una vez marcado, el chat sigue yendo a AI Horde primero durante 24 h desde su último mensaje +18, así no depende de que cada mensaje tenga palabras explícitas. */
+  const ADULT=/\b(sexo|sexual(es|mente)?|sexy|erotic[oa]s?|desnud[oa]s?|desnudar(se|te|me)?|nud[eo]s?|naked|topless|sin ropa|quita(te|me)? la ropa|desvest\w*|lenceri\w*|tanga|bragas|tetas|senos|pezon(es)?|nipples?|boobs?|breasts?|pene|verga|polla|vagina|vulva|clitoris|cock|dick|penis|pussy|culo|nalgas|trasero|follar\w*|follame|cogeme|cogerte|cogiendo|fuck\w*|orgasm\w*|correrme|correrse|me vengo|eyacul\w*|semen|cum|cumming|masturb\w*|mamada|chupame|chuparte|lamer(te|me)?|felaci\w*|blowjob|handjob|penetr\w*|gemid\w*|gimo|gime|moan\w*|excitad[oa]|horny|bdsm|hacer el amor|hagamos el amor|make love)\b/i;
+  const norm=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’‘]/g,"'");
+  function isAdult(msgs){
+    try{
+      const t=(msgs||[]).filter(m=>m&&m.role!=='system').slice(-14).map(m=>typeof m.content==='string'?m.content:Array.isArray(m.content)?m.content.map(x=>(x&&x.text)||'').join(' '):'').join('\n');
+      return ADULT.test(norm(t))
+    }catch(e){return false}}
+  /* Frases típicas de rechazo de una IA con filtros (se miran solo en el inicio de la respuesta) */
+  const REF=[
+    /\blo siento,? (pero )?no (puedo|podre|me es posible)/,
+    /\bno puedo (ayudar|asistir|generar|escribir|crear|participar|cumplir|proporcionar|producir|complacer|continuar|seguir)\b[^.\n]{0,40}\b(contenido|solicitud|peticion|escena|historia|roleplay|juego de rol|rol|conversacion|explicit|sexual)/,
+    /\bno (puedo|voy a)\b[^.\n]{0,60}\b(sexual|explicit)/,
+    /\bcomo (una? )?(ia|inteligencia artificial|modelo de lenguaje|asistente (de ia|virtual))\b/,
+    /(politicas?|pautas|directrices|normas)[^.\n]{0,25}(contenido|seguridad|uso)\b/,
+    /\bi('?m| am) sorry,? but\b/,
+    /\bi (can('?t|not)|won't|will not|am unable to|'m unable to|am not able to|'m not able to) (continue|help|assist|write|generate|create|engage|fulfill|comply|provide|produce|participate|roleplay|do that|respond|take part)/,
+    /\bas an ai\b|language model|content polic|against my (guidelines|programming|policy)|violates? (my|the) (guidelines|polic)/];
+  const isRefusal=t=>{const x=norm(t).slice(0,240);return REF.some(re=>re.test(x))};
+  let ADM={};try{ADM=JSON.parse(localStorage.getItem('or_adult')||'{}')}catch(e){}
+  const DAY=86400000,isSticky=k=>!!ADM[k]&&Date.now()-ADM[k]<DAY;
+  function markAdult(k){ADM[k]=Date.now();try{const ks=Object.keys(ADM);ks.forEach(x=>{if(Date.now()-ADM[x]>=DAY)delete ADM[x]});
+    const ks2=Object.keys(ADM);if(ks2.length>60)ks2.sort((a,b)=>ADM[a]-ADM[b]).slice(0,ks2.length-60).forEach(x=>delete ADM[x]);
+    localStorage.setItem('or_adult',JSON.stringify(ADM))}catch(e){}}
+  /* Identifica el chat por el inicio del prompt del personaje */
+  function convKey(msgs){const t=(msgs||[]).filter(m=>m&&m.role==='system').map(m=>String(m.content||'')).join('\n').slice(0,300);let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return 'k'+(h>>>0).toString(36)}
+  /* Lee el inicio de una respuesta en streaming para ver si es un rechazo. Si no lo es, devuelve la respuesta completa y sin cortes. */
+  async function sniff(r){
+    if(!r.body||!r.body.getReader)return {refused:false,resp:r};
+    const rd=r.body.getReader(),dec=new TextDecoder(),chunks=[];let buf='',txt='',done=false,filt=false;
+    const grab=l=>{if(!l.startsWith('data:'))return;const p=l.slice(5).trim();if(!p||p==='[DONE]')return;
+      try{const ch=(JSON.parse(p).choices||[])[0];if(ch){if(ch.delta&&ch.delta.content)txt+=ch.delta.content;if(ch.finish_reason==='content_filter')filt=true}}catch(e){}};
+    while(txt.length<240&&!done&&!filt){
+      const x=await rd.read();
+      if(x.done){done=true;break}
+      chunks.push(x.value);buf+=dec.decode(x.value,{stream:true});
+      const ls=buf.split('\n');buf=ls.pop();ls.forEach(grab)}
+    if(filt||isRefusal(txt)){try{rd.cancel()}catch(e){}return {refused:true}}
+    const stream=new ReadableStream({
+      start(ctl){chunks.forEach(c=>ctl.enqueue(c));if(done)ctl.close()},
+      async pull(ctl){if(done)return;const x=await rd.read();if(x.done){done=true;ctl.close()}else ctl.enqueue(x.value)},
+      cancel(){try{rd.cancel()}catch(e){}}});
+    return {refused:false,resp:new Response(stream,{status:r.status,headers:r.headers})}}
+  const AIL={or:'OpenRouter',groq:'Groq',horde:'AI Horde'};
+  /* Chat normal: OpenRouter -> Groq -> AI Horde (último recurso). Chat +18: AI Horde (Gemma heretic) -> OpenRouter -> Groq.
+     Si una IA se niega a responder, el chat se marca como +18 y se reintenta con AI Horde en el mismo mensaje.
+     OpenRouter y Groq solo cuentan si tienen key. Sirve igual para chats, salas y grupos. */
   window.aiFetch=async function(u,o){
     if(!(typeof u==='string'&&u.indexOf('openrouter.ai/api/v1/chat/completions')>-1))return _f(u,o);
+    let b={};try{b=JSON.parse(o.body)}catch(e){}
     const K={or:($('key').value||'').trim(),groq:($('gkey').value||'').trim(),horde:($('hkey').value||'').trim()||'0000000000'};
-    const ord=['horde'];if(K.or)ord.push('or');if(K.groq)ord.push('groq');
-    let bad=null;
-    for(const p of ord){
+    const rp=b.stream===true;   /* solo los turnos de roleplay pueden ir a AI Horde; resúmenes, ideas y fotos no */
+    const key=convKey(b.messages),adult=rp&&(isSticky(key)||isAdult(b.messages));
+    if(adult)markAdult(key);
+    let queue=[];
+    if(adult)queue.push('horde');
+    if(K.or)queue.push('or');if(K.groq)queue.push('groq');
+    if(rp&&!adult)queue.push('horde');
+    let bad=null,refused=null,horded=false;
+    const toHorde=()=>{if(rp&&!horded)queue=['horde',...queue.filter(x=>x!=='horde')]};
+    while(queue.length){
+      const p=queue.shift();
       let r=null;
-      try{r=p==='groq'?await viaGroq(o,K.groq,null):p==='horde'?await viaHorde(o,K.horde,ord.length>1?100000:240000):await _f(u,o)}
-      catch(e){if(!bad)bad=e;continue}
+      try{
+        if(p==='horde')horded=true;
+        r=p==='groq'?await viaGroq(o,K.groq,null):p==='horde'?await viaHorde(o,K.horde,queue.length?120000:240000):await _f(u,o);
+        if(r&&r.ok&&rp&&p!=='horde'){
+          const sn=await sniff(r);
+          if(sn.refused){refused=refused||p;markAdult(key);toHorde();continue}
+          return sn.resp}
+      }catch(e){if(!bad)bad=e;continue}
       if(!r)continue;
       if(r.ok)return r;
       if(!bad)bad=r;
+      if(rp&&(r.status===400||r.status===403)){
+        try{if(/moderat|content.?(polic|filter)|safety|flagged|blocked/i.test(await r.clone().text())){markAdult(key);toHorde()}}catch(e){}}
     }
+    if(refused)return fail(503,'La IA «'+AIL[refused]+'» no quiso responder este contenido y AI Horde no pudo atender la petición ahora. Intenta de nuevo en un momento.');
     if(bad instanceof Error)throw bad;
-    return bad||fail(400,'No hay ninguna IA disponible para esta petición.')};
+    return bad||fail(400,rp?'No hay ninguna IA disponible para esta petición.':'Esta función necesita una API key de OpenRouter o de Groq.')};
 })();
 
 function renderMenu(){
@@ -762,7 +849,8 @@ function hState(){if(!room)return;const pl=pubPlayers();bcast({t:'state',players
 function saveRoom(){
   if(!room||!room.host)return;
   sv('or_chat_room_'+room.code,{ch:room.key,name:room.name,ts:Date.now(),ctx:room.ctx,mem:room.mem,hist:room.hist.map(e=>e.image?{...e,image:''}:e)})}
-function sysMsg(t){room.hist.push({k:'s',text:t});bcast({t:'sys',text:t});sysLine(t);saveRoom()}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function sysMsg(t){const u=uid();room.hist.push({k:'s',text:t,u});bcast({t:'sys',text:t,u});sysLine(t);saveRoom()}
 function createRoom(code,ch,pub,name,auto,grp){
   if(typeof Peer==='undefined'){rmsg('PeerJS no cargó (¿sin internet?).');return}
   if(!anyKey()){rmsg('Pon tu API key en ⚙ Ajustes: la IA de la sala funciona con la del anfitrión.');return}
@@ -781,16 +869,22 @@ function createRoom(code,ch,pub,name,auto,grp){
     else if(ch.intro){room.hist.push({k:'a',text:pl(ch.intro)});room.ctx.push({role:'assistant',content:pl(ch.intro)})}
     room.hist.forEach((e,i)=>{if(e.k==='a'&&!e.mid)e.mid='h'+i});
     saveRoom();enterRoom();if(pub){regLobby();room.timer=setInterval(regLobby,15000)}});
-  p.on('connection',c=>{c.on('data',d=>hData(c,d));c.on('close',()=>hLeave(c.peer))});
+  p.on('connection',c=>{if(c._h)return;c._h=1;c.on('data',d=>hData(c,d));c.on('close',()=>{if(room&&room.conns[c.peer]===c)hLeave(c.peer)})});
 }
 function hData(c,d){
   if(!room||!d)return;
   if(d.t==='join'){
+    const welcome=()=>c.send({t:'welcome',you:c.peer,ch:{name:room.ch.name,emoji:room.ch.emoji,voice:room.ch.voice||'',image:(room.ch.image&&room.ch.image.length<300000)?room.ch.image:''},hist:room.hist,members:room.members?room.members.map(c=>({id:c.id,name:c.name,voice:c.voice||'',image:(c.image&&c.image.length<120000)?c.image:''})):null,players:pubPlayers()});
+    const info={name:clip(d.name,24)||'Jugador',desc:clip(d.desc,300),image:(typeof d.image==='string'&&d.image.length<80000)?d.image:''};
+    const ex=room.players.find(p=>p.id===c.peer);
+    if(ex){   /* el mismo invitado volvió a enviar "join" (reconexión o doble toque): no se agrega otra vez */
+      Object.assign(ex,info);const old=room.conns[c.peer];room.conns[c.peer]=c;
+      if(old&&old!==c){try{old.close()}catch(e){}}
+      welcome();hState();return}
     if(room.players.length>=MAXP){c.send({t:'full'});setTimeout(()=>c.close(),400);return}
-    const pl={id:c.peer,name:clip(d.name,24)||'Jugador',desc:clip(d.desc,300),image:(typeof d.image==='string'&&d.image.length<80000)?d.image:'',
-      color:COLORS.find(x=>!room.players.some(p=>p.color===x))};
+    const pl={id:c.peer,...info,color:COLORS.find(x=>!room.players.some(p=>p.color===x))};
     room.players.push(pl);room.conns[c.peer]=c;
-    c.send({t:'welcome',you:c.peer,ch:{name:room.ch.name,emoji:room.ch.emoji,voice:room.ch.voice||'',image:(room.ch.image&&room.ch.image.length<300000)?room.ch.image:''},hist:room.hist,members:room.members?room.members.map(c=>({id:c.id,name:c.name,voice:c.voice||'',image:(c.image&&c.image.length<120000)?c.image:''})):null,players:pubPlayers()});
+    welcome();
     sysMsg(pl.name+' se unió a la sala.');hState();
   }else if(d.t==='say')hSay(c.peer,clip(d.text,2000));
   else if(d.t==='voice')hVoiceReq(c,d.mid);
@@ -800,7 +894,7 @@ function hSay(id,text){
   if(room.busy){c&&c.send({t:'err',text:'La IA está respondiendo, espera un momento.'});return}
   if(room.pending.some(x=>x.id===id)){c&&c.send({t:'err',text:'Ya enviaste este turno.'});return}
   room.pending.push({id,text});
-  const e={k:'p',id,name:pl.name,image:pl.image,color:pl.color,text};
+  const e={k:'p',u:uid(),id,name:pl.name,image:pl.image,color:pl.color,text};
   room.hist.push(e);bcast({t:'msg',e});renderEntry(e);saveRoom();hState();checkRound();
 }
 function hLeave(id){
@@ -843,32 +937,40 @@ async function runRound(){
 }
 
 /* --- Invitado --- */
+let joining=false;
 function joinRoom(code){
   if(typeof Peer==='undefined'){rmsg('PeerJS no cargó (¿sin internet?).');return}
   if(room){rmsg('Ya estás en una sala.');return}
-  rmsg('Conectando…');const p=new Peer();let ok=false;
+  if(joining){rmsg('Ya te estás conectando a una sala…');return}
+  joining=true;
+  rmsg('Conectando…');const p=new Peer();let ok=false,c=null,to=null;
+  const fin=()=>{joining=false;clearTimeout(to)};
+  const seen=k=>{if(k==null||!room)return false;const S=room.seen||(room.seen=new Set());if(S.has(k))return true;S.add(k);return false};
   p.on('open',()=>{
-    const c=p.connect(PK+code,{reliable:true});
-    const to=setTimeout(()=>{if(!ok){rmsg('No se pudo conectar con esa sala.');try{p.destroy()}catch(e){}}},10000);
-    c.on('open',()=>{const me=curProf();c.send({t:'join',name:me.name,desc:me.desc,image:me.image})});
+    if(c)return;   /* una sola conexión por intento, aunque "open" se dispare dos veces */
+    c=p.connect(PK+code,{reliable:true});let sent=false;
+    to=setTimeout(()=>{if(!ok){fin();rmsg('No se pudo conectar con esa sala.');try{p.destroy()}catch(e){}}},10000);
+    c.on('open',()=>{if(sent)return;sent=true;const me=curProf();c.send({t:'join',name:me.name,desc:me.desc,image:me.image})});
     c.on('data',d=>{
-      if(d.t==='welcome'){ok=true;clearTimeout(to);
+      if(d.t==='welcome'){
+        if(ok||room)return;   /* bienvenida repetida: se ignora */
+        ok=true;fin();
         room={host:false,peer:p,conn:c,code,me:d.you,ch:d.ch,members:d.members||null,hist:d.hist||[],players0:d.players||[],pub:false};enterRoom()}
-      else if(d.t==='full'){clearTimeout(to);rmsg('La sala está llena (máx. 3).');try{p.destroy()}catch(e){}}
-      else if(!room)return;
+      else if(d.t==='full'){fin();rmsg('La sala está llena (máx. 3).');try{p.destroy()}catch(e){}}
+      else if(!room||room.conn!==c)return;   /* solo se atiende la conexión activa */
       else if(d.t==='state')renderRoomBar(d.players);
-      else if(d.t==='msg'){room.hist.push(d.e);renderEntry(d.e)}
-      else if(d.t==='sys'){room.hist.push({k:'s',text:d.text});sysLine(d.text)}
-      else if(d.t==='ai0')showAi0(d.who);
+      else if(d.t==='msg'){if(seen(d.e&&d.e.u))return;room.hist.push(d.e);renderEntry(d.e)}
+      else if(d.t==='sys'){if(seen(d.u))return;room.hist.push({k:'s',text:d.text,u:d.u});sysLine(d.text)}
+      else if(d.t==='ai0'){if(!room.aiNode)showAi0(d.who)}
       else if(d.t==='ai')updAi(d.text,d.who);
-      else if(d.t==='aiend'){updAi(d.text,d.who);addSpeak(room.aiNode,d.text,d.mid);room.aiNode=null;room.hist.push({k:'a',who:d.who,text:d.text,mid:d.mid})}
+      else if(d.t==='aiend'){if(seen('a'+d.mid))return;updAi(d.text,d.who);addSpeak(room.aiNode,d.text,d.mid);room.aiNode=null;room.hist.push({k:'a',who:d.who,text:d.text,mid:d.mid})}
       else if(d.t==='err'){dropAi();document.querySelectorAll('.spk[data-st="load"]').forEach(x=>{x.dataset.st='';x.textContent='🔊 Escuchar'});err(d.text)}
       else if(d.t==='audio')attachAudio(d.mid,new Blob([d.data],{type:d.mime||'audio/mpeg'}),d.auto)
       else if(d.t==='kick')leave('El anfitrión te expulsó de la sala.');
     });
-    c.on('close',()=>{clearTimeout(to);if(room&&room.peer===p)leave('El anfitrión cerró la sala.')});
+    c.on('close',()=>{fin();if(room&&room.peer===p)leave('El anfitrión cerró la sala.')});
   });
-  p.on('error',e=>{rmsg(e.type==='peer-unavailable'?'No existe una sala con ese código.':'Error: '+e.type)});
+  p.on('error',e=>{fin();rmsg(e.type==='peer-unavailable'?'No existe una sala con ese código.':'Error: '+e.type)});
 }
 function roomSend(){
   const t=inp.value.trim();if(!t)return;
